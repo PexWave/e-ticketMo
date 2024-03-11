@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap');
+
+template {
+    background-color: #F4F5FF;
+}
+.logo-col {
+    background-color: #263D8F;
+    width: 50%;
+  }
+  
+  .sign-in-col {
+    background-color: #F4F5FF;
+    width: 100%;
+    font-family: "Inter", sans-serif;
+  }
+  
+  .logo-col, .sign-in-col {
+    height: 100vh; /* Set the height to occupy the entire viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .header {
+    font-family: "Unbounded", sans-serif;
+    font-size: 50px;
+    color: #263D8F;
+  }
