@@ -30,10 +30,13 @@ Route::controller(RoleController::class)->group(function() {
     Route::put('/role/{id}','update');
     //specific resource
     Route::get('/role/{id}','show');
-
+});
   
 // ROUTES FOR CATEGORIES
+Route::apiResource('/extract-categories', CategoriesController::class);
 Route::controller(CategoriesController::class)->group(function(){
     Route::post('/add-category', 'store');
-
+    Route::put('/update-category/{id}', 'update');
+    Route::get('/get-category/{id}', 'show');
+    Route::delete('/delete-category/{id}', 'destroy');
 });
