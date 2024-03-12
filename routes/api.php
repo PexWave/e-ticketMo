@@ -7,7 +7,6 @@ use App\Http\Controllers\api\OfficeController;
 use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\Api\CategoriesController;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +57,5 @@ Route::controller(CategoriesController::class)->group(function(){
 });
 
 
-});
 
 
