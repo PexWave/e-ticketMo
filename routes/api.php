@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\OfficeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+//OFFICE ROUTE
+
+Route::apiResource('/office', OfficeController::class);
+
+Route::controller(OfficeController::class)->group(function(){
+    Route::post('/office', 'store');
+    Route::put('/office/{id}', 'update');
+    Route::delete('/office/{id}','destroy');
 });
