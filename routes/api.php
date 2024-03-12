@@ -6,7 +6,6 @@ use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\Api\CategoriesController;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +55,7 @@ Route::controller(CategoriesController::class)->group(function(){
     Route::delete('/delete-category/{id}', 'destroy');
 });
 
+
 // ROUTES FOR USER
 Route::apiResource('/user', UserController::class);
 Route::controller(UserController::class)->group(function() {
@@ -63,6 +63,7 @@ Route::controller(UserController::class)->group(function() {
     Route::put('/user/{id}','update');
     Route::delete('/user/{id}', 'destroy');
 });
+
 
 
 
