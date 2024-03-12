@@ -3,23 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoriesRequest;
-use App\Http\Resources\CategoriesResource;
-use App\Models\Category;
+use App\Http\Requests\ClientTypeRequest;
+use App\Http\Resources\ClientTypeResource;
+use App\Models\ClientType;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
-
-class CategoriesController extends Controller
+class ClientTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return CategoriesResource::collection(Category::all());
+        return ClientTypeResource::collection(ClientType::all());
     }
 
     /**
@@ -33,17 +32,17 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CategoriesRequest $request)
+    public function store(ClientTypeRequest $request)
     {
-
-        $category = $request->validated();
-
+        $clientType = $request->validated();
 
         try {
             DB::beginTransaction();
 
-            $categoryData = Category::create([
-                "name" => $category['name']
+            $clientTypeData = ClientType::create([
+                "name" => $clientType['name'],
+                "importance" => $clientType['importance'],
+                "office_id" => $clientType['office_id'],
             ]);
 
             DB::commit();
@@ -56,7 +55,8 @@ class CategoriesController extends Controller
                ], 500);        
             }
 
-        return new CategoriesResource($categoryData);
+        return new ClientTypeResource($clientTypeData);
+
     }
 
     /**
@@ -64,8 +64,8 @@ class CategoriesController extends Controller
      */
     public function show(string $id)
     {
-        $category = Category::findOrFail($id);
-        return $category;
+        $clientType = ClientType::findOrFail($id);
+        return $clientType;
     }
 
     /**
@@ -73,33 +73,30 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-
-
-    public function update(CategoriesRequest $request, string $id)
+    public function update(ClientTypeRequest $request, string $id)
     {
         try {
-            $category = Category::findOrFail($id);
-            $category->update($request->validated());
+            $clientType = ClientType::findOrFail($id);
+            $clientType->update($request->validated());
+
             return response()->json([
                 "status" => "Success",
                 "message" => "Category updated successfully!",
-                "data" => new CategoriesResource($category),
+                "data" => new ClientTypeResource($clientType),
                ], 200);
 
         } catch (\Throwable $th) {
             DB::rollBack();
-
             return response()->json([
                 "status" => "Failed",
                 "message" => $th->getMessage(),
-               ], 500);    
-
+               ], 500);        
             }
     }
 
@@ -109,12 +106,13 @@ class CategoriesController extends Controller
     public function destroy(string $id)
     {
         try {
-            $category = Category::findOrFail($id);
-            $category->delete();
+            $clientType = ClientType::findOrFail($id);
+            $clientType->delete();
+
             return response()->json([
                 "status" => "Success",
-                "message" => "Category deleted successfully!",
-                "data" => new CategoriesResource($category),
+                "message" => "Category updated successfully!",
+                "data" => new ClientTypeResource($clientType),
                ], 200);
 
         } catch (\Throwable $th) {
