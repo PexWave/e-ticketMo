@@ -1,9 +1,9 @@
 <?php
 
 
-use App\Http\Controllers\api\OfficeController;
-use App\Http\Controllers\api\UserController;
-use App\Http\Controllers\api\RoleController;
+use App\Http\Controllers\Api\OfficeController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ClientTypeController;
 use Illuminate\Http\Request;
