@@ -2,8 +2,7 @@
 
 
 use App\Http\Controllers\api\OfficeController;
-
-
+use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ClientTypeController;
@@ -56,6 +55,7 @@ Route::controller(CategoriesController::class)->group(function(){
     Route::delete('/delete-category/{id}', 'destroy');
 });
 
+
 // CLIENT-TYPE ROUTE
 // Route::apiResource('/extract-client-types', ClientTypeController::class);
 Route::apiResource('/extract-client-types', ClientTypeController::class);
@@ -65,5 +65,17 @@ Route::controller(ClientTypeController::class)->group(function() {
     Route::get('/get-client-type/{id}', 'show');
     Route::delete('/delete-client-type/{id}', 'destroy');
 });
+
+
+// ROUTES FOR USER
+Route::apiResource('/user', UserController::class);
+Route::controller(UserController::class)->group(function() {
+    Route::post('/user','store');
+    Route::put('/user/{id}','update');
+    Route::delete('/user/{id}', 'destroy');
+});
+
+
+
 
 
