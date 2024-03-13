@@ -42,14 +42,7 @@ class ItStaffController extends Controller
         $validatedData = $request->validated();
 
         //CHECK IF USER EXIST, IF NOT, CREATE USER
-        $user = User::create([
-            'first_name' => $validatedData['first_name'],
-            'middle_name' => $validatedData['middle_name'],
-            'last_name' => $validatedData['last_name'],
-            'username' => $validatedData['username'],
-            'password' => $validatedData['password'],
-            'office_id' => $validatedData['office_id'],
-        ]);
+        $user = User::create($validatedData['user_info']);
         
         // CREATE IT STAFF DATA
         $itEmployee = $user->it_employee()->create(['staff_status' => 'Available']);
@@ -97,16 +90,67 @@ class ItStaffController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ItStaffRequest $request, string $employeeId)
     {
-        //
+
+        try {
+            DB::beginTransaction();
+
+            $validatedData = $request->validated();
+            $user = User::whereHas('it_employee', function($query) use ($employeeId) {
+                $query->where('id', $employeeId);
+            })->first();
+
+            $user->update($validatedData['user_info']);
+
+            $user->it_employee()->first()->categories()->sync($validatedData['categories']);  // Access categories relationship on IT Employee
+
+            $user->roles()->sync($validatedData['roles']);
+            
+            DB::commit();
+
+            return response()
+            ->json([
+                "message" => "Successfully updated IT Staff"
+            ], 201);    
+            
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()
+            ->json([
+                "message" => $th->getMessage()
+            ], 500);
+        
+        }
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $employeeId)
     {
-        //
+
+        try {
+            //code...
+            DB::beginTransaction();
+
+            $user = User::whereHas('it_employee', function($query) use ($employeeId) {
+                $query->where('id', $employeeId);
+            })->first();
+    
+            $user->delete();
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()
+            ->json([
+                "message" => $th->getMessage()
+            ], 500);
+        }
     }
 }

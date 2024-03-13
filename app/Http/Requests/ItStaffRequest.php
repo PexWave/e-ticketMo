@@ -22,14 +22,16 @@ class ItStaffRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "first_name" => "",
-            "middle_name" => "",
-            "last_name" => "",
-            "username" => "",
-            "password" => "",
-            "office_id" => "",
+// Ensure all nested fields are present
+            "user_info.first_name" => "required|string",
+            "user_info.middle_name" => "nullable|string",
+            "user_info.last_name" => "required|string",
+            "user_info.username" => "required",
+            "user_info.password" => "required",
+            "user_info.office_id" => "required|integer|exists:offices,id",
+            
             "categories" => "",
-            "roles" => ""
+            "roles" => "",
         ];
     }
 }
