@@ -31,18 +31,6 @@ class UserRoleController extends Controller
      */
     public function store(UserRoleRequest $userRoleRequest)
     {
-        try {
-            $userRole = new UserRole($userRoleRequest->validated());
-            
-            return response()->json([
-                "message" => "User role was successfully created!",
-                "user_role" => $userRole
-            ], 200);
-        } catch(\Throwable $th) {
-            return response()->json([
-                "message" => $th->getMessage(),
-            ], 500);
-        }
         
     }
 
