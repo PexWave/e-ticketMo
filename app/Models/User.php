@@ -61,7 +61,7 @@ class User extends Authenticatable
     }
 
     public function clientType(): BelongsToMany{
-        return $this->belongsToMany(ClientType::class, 'user_client_types');
+        return $this->belongsToMany(ClientType::class, 'user_client_types', 'user_id','client_type_id');
     }
 
     public function it_employee(): HasMany

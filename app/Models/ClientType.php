@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ClientType extends Model
 {
@@ -19,7 +20,7 @@ class ClientType extends Model
         'office_id',
     ];
 
-    public function user(): BelongsToMany{
-        return $this->belongsToMany(User::class, 'user_client_types');
+    public function user(): HasMany{
+        return $this->hasMany(User::class, 'user_client_types');
     }
 }
