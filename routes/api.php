@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ClientTypeController;
 use App\Http\Controllers\Api\ItStaffController;
+use App\Http\Controllers\Api\UserClientController;
+use App\Models\UserClientType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -79,6 +81,14 @@ Route::controller(UserController::class)->group(function() {
     Route::post('/user','store');
     Route::put('/user/{id}','update');
     Route::delete('/user/{id}', 'destroy');
+});
+
+// ROUTES FOR USER
+Route::apiResource('/client', UserClientController::class);
+Route::controller(UserClientController::class)->group(function() {
+    Route::post('/client','store');
+    Route::put('/client/{id}','update');
+    Route::delete('/client/{id}', 'update');
 });
 
 
