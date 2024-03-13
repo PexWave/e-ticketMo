@@ -6,11 +6,13 @@
       <img src="images/LOGO-BLUE.png" class="w-55 px-16">
      </v-flex>
 
-    <v-flex xs12 md8 class="sign-in h-screen">
+    <v-flex xs12 md8 class="sign-in h-screen mb-16">
       <v-form class="w-50">
-          <v-text-field v-model="username" label="Username"></v-text-field>
-          <v-text-field v-model="password" label="Password" type="password"></v-text-field>
-          <v-btn class="w-100"color="primary">Sign In</v-btn>
+          <h1 class="py-5 text-center"> Sign In </h1>
+          
+          <v-text-field  rounded variant="solo" label="Username" id="v-text-field"></v-text-field>
+          <v-text-field  rounded variant="solo" label="Password" type="password"></v-text-field>
+          <v-btn rounded class="w-100" id="v-btn">Log In</v-btn>
         </v-form>
         <Footer />
      </v-flex>
@@ -19,7 +21,7 @@
 </template>
 
 <script>
-import Footer from '@/Components/Footer.vue'; 
+import Footer from '@/Components/Layout/Footer.vue'; 
 
 export default {
   components: {

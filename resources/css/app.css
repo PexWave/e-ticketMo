@@ -19,6 +19,10 @@
 
 h1 {
   font-family: "Unbounded", sans-serif;
+  font-size: 48px;
+  color: #263D8F;
+
+
 }
 
 .footer {
@@ -28,4 +32,53 @@ h1 {
   bottom: 0;
   right: 0;
   z-index: 9999; 
+}
+
+.footer-content {
+  position: absolute;
+  font-size: 14px;
+  line-height: 15px;
+  margin-left: 70%;
+  margin-right: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.v-text-field {
+  border-radius: 20%;
+}
+
+#v-btn {
+  background-color: #263D8F;
+  color: #F4F5FF;
+}
+
+.sidebar {
+  background-color: #263D8F !important;
+  font-family: 'Inter', sans-serif !important;
+  color: #F4F5FF !important;
+}
+
+.text-icon {
+  display: flex;
+  padding: 15px, 5px, 0px;
+}
+
+.text-icon :hover {
+  display: flex;
+  padding: 15px, 5px, 0px;
+  background-color: #F4F5FF !important;
+  color: #263D8F !important;
+  border-radius: 20% !important;
+}
+
+.drawer-icon {
+  margin-right: 15px;
+}
+
+.drawer-logo {
+  width: 100%; 
+  padding: 10px; 
+  margin-top: 30px; 
+  margin-bottom: 30px;
 }
