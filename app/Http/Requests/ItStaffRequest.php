@@ -11,7 +11,7 @@ class ItStaffRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class ItStaffRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "first_name" => "",
+            "middle_name" => "",
+            "last_name" => "",
+            "username" => "",
+            "password" => "",
+            "office_id" => "",
+            "categories" => "",
+            "roles" => ""
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ClientTypeController;
+use App\Http\Controllers\Api\ItStaffController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,12 +25,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//STAFF CRUD ROUTE
+Route::apiResource('/staff', ItStaffController::class);
+Route::controller(ItStaffController::class)->group(function(){
+    Route::post('/staff', 'store');
+    Route::put('/staff/{id}', 'update');
+    Route::delete('/staff/{id}','destroy');
+});
 
 
 //OFFICE ROUTE
-
 Route::apiResource('/office', OfficeController::class);
-
 Route::controller(OfficeController::class)->group(function(){
     Route::post('/office', 'store');
     Route::put('/office/{id}', 'update');

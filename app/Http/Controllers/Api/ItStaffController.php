@@ -4,8 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ItStaffRequest;
+use App\Http\Resources\ItStaffResource;
+use App\Models\ITEmployee;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\DB;
+
 
 class ItStaffController extends Controller
 {
@@ -14,7 +20,7 @@ class ItStaffController extends Controller
      */
     public function index()
     {
-        //
+        return ItStaffResource::collection(User::with('roles', 'it_employee.categories')->paginate(10));
     }
 
     /**
@@ -31,7 +37,10 @@ class ItStaffController extends Controller
     public function store(ItStaffRequest $request)
     {
         try {
+        DB::beginTransaction();
+
         $validatedData = $request->validated();
+
         //CHECK IF USER EXIST, IF NOT, CREATE USER
         $user = User::create([
             'first_name' => $validatedData['first_name'],
@@ -42,10 +51,16 @@ class ItStaffController extends Controller
             'office_id' => $validatedData['office_id'],
         ]);
         
-        //CREATE IT STAFF DATA, ASSIGN CATEGORY
+        // CREATE IT STAFF DATA
+        $itEmployee = $user->it_employee()->create(['staff_status' => 'Available']);
 
-        //ASSIGN ROLE
+        // ASSIGN STAFF CATEGORY
+        $itEmployee->categories()->attach($validatedData['categories']);  // Access categories relationship on IT Employee
 
+        // ASSIGN ROLE
+        $user->roles()->attach($validatedData['roles']);
+
+        DB::commit();
 
         return response()
         ->json([
@@ -53,15 +68,13 @@ class ItStaffController extends Controller
         ], 201);
 
         } catch (\Throwable $th) {
-            //throw $th;
+            DB::rollBack();
 
             return response()
             ->json([
                 "message" => $th->getMessage()
             ], 500);
         }
-
-
 
     }
 

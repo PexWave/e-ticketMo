@@ -18,8 +18,9 @@ class Category extends Model
         'name',
     ];
 
-    public function it_employee(): BelongsToMany{
-        return $this->belongsToMany(ITEmployee::class);
+    public function it_employee(): BelongsToMany
+    {
+        return $this->belongsToMany(ITEmployee::class,'staff_categories');
     }
 
 }
