@@ -35,7 +35,7 @@ class UserController extends Controller
         try{
             $user = User::create($userRequest->validated());
             return response()->json([
-                "message"=>"User was successfullt created!"
+                "message"=>"User was successfully created!"
             ], 200);
 
 

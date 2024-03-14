@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ClientTypeController;
 use App\Http\Controllers\Api\ItStaffController;
+use App\Http\Controllers\api\TaskTypeController;
 use App\Http\Controllers\Api\UserClientController;
 use App\Models\UserClientType;
 use Illuminate\Http\Request;
@@ -91,6 +92,13 @@ Route::controller(UserClientController::class)->group(function() {
     Route::delete('/client/{id}', 'update');
 });
 
+// ROUTES FOR TASK
+Route::apiResource('/task', TaskTypeController::class);
+Route::controller(TaskTypeController::class)->group(function() {
+    Route::post('/task','store');
+    Route::put('/task/{id}','update');
+    Route::delete('/task/{id}', 'destroy');
+});
 
 
 
