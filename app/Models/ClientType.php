@@ -20,7 +20,4 @@ class ClientType extends Model
         'office_id',
     ];
 
-    public function user(): HasMany{
-        return $this->hasMany(User::class, 'user_client_types');
-    }
 }
