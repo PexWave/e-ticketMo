@@ -68,4 +68,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(ITEmployee::class);
     }
+
+    public function ticket(): HasMany
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
 }

@@ -4,12 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Ticket extends Model
 {
     use HasFactory;
 
-    public $table='tickets';
+    public $table = 'tickets';
+
+    public $timestamps = false;
+
     
     protected $fillable = [
         'user_id',
@@ -19,5 +24,22 @@ class Ticket extends Model
         'modified_date',
         'reference_date',
         'remarks',
+        'task_type_id'
     ];
+
+    public function extension_requests(): HasMany
+    {
+        return $this->hasMany(ExtensionRequest::class);
+    }
+    
+
+    public function task_type(): BelongsTo
+    {
+        return $this->belongsTo(TaskType::class);
+    }
+    
+    // public function user(): BelongsTo
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
 }
