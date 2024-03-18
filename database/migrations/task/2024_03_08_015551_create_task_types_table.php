@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->onDelete('CASCADE');
             $table->tinyInteger('difficulty');
             $table->tinyInteger('urgency');
-            $table->timestamp('response_time')->nullable();
-            $table->timestamp('resolve_time')->nullable();
+            $table->unsignedMediumInteger('response_time')->nullable();
+            $table->unsignedMediumInteger('resolve_time')->nullable();
         });
     }
 

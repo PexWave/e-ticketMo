@@ -17,7 +17,7 @@ class ClientTypeSeeder extends Seeder
             [
                 "name" => "CTO-Collector",
                 "importance" => 4,
-                "office_id" =>  3
+                "office_id" =>  2
 
             ],
             [

@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('CASCADE');
-            $table->string('ticket_status');
+            $table->string('ticket_status')->default("Pending");
             $table->timestamp('actual_response')->nullable();
             $table->timestamp('actual_resolve')->nullable();
             $table->timestamp('modified_date')->useCurrent = true;
             $table->timestamp('reference_date')->useCurrent = true;
-            $table->string('remarks');
+            $table->string('remarks')->nullable();
         });
     }
 
