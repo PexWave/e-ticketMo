@@ -10,6 +10,7 @@ class UserClientType extends Model
     use HasFactory;
 
     public $table = 'user_client_types';
+    public $timestamps = false;
 
     protected $fillable = [
         'user_id',
