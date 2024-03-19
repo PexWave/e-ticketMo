@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('staff_categories', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('category_id')->constrained('categories')->onDelete('CASCADE');
-            $table->foreignId('it_employee_id')->constrained('it_employees')->onDelete('CASCADE');
+        Schema::table('it_employees', function (Blueprint $table) {
+            $table->timestamp('status_time_start')->nullable();
+            $table->timestamp('status_time_end')->nullable();
         });
     }
 
@@ -23,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('staff_categories');
+        Schema::table('it_employees', function (Blueprint $table) {
+            //
+        });
     }
 };

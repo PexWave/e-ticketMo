@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateOfficeRequest extends FormRequest
+class CategoriesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,8 @@ class UpdateOfficeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            "name" => "required",
+
         ];
     }
 }
