@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+const SupervisorDashboard = () => import("@/Components/Supervisor/SupervisorDashboard.vue");
+const ClientHomepage = () => import("@/Components/Client/ClientHomepage.vue");
+const CreateTicket = () => import("@/Components/Forms/CreateTicket.vue");
+const CreateTask = () => import("@/Components/Forms/CreateTask.vue");
+const CreateUsers= () => import("@/Components/Forms/CreateUsers.vue");
 const Home = () => import("@/Components/Home.vue");
+
 
 // Authentication
 const SignIn = () => import("@/Components/Auth/SignIn.vue");
@@ -16,7 +22,7 @@ const routes = [
         path: "/auth",
         component: {
             template: "<router-view/>",
-        },
+        },  
         children: [
             {
                 path: "/signin",
@@ -27,6 +33,34 @@ const routes = [
                 path: "/signup",
                 name: "auth.signup",
                 component: SignUp,
+            },
+            {
+                path: "/supervisor-dashboard",
+                name: "auth.supervisor-dashboard",
+                component: SupervisorDashboard,
+            },
+            {
+                path: "/client-home",
+                name: "auth.client-home",
+                component: ClientHomepage,
+            },
+          
+            {
+                path: "/createTicket",
+                name: "auth.createTicket",
+                component: CreateTicket,
+            },
+
+            {
+                path: "/createTask",
+                name: "auth.createTask",
+                component: CreateTask,
+            },
+
+            {
+                path: "/createUsers",
+                name: "auth.createUsers",
+                component: CreateUsers,
             },
         ],
     },

@@ -51,6 +51,13 @@ h1 {
 }
 
 #v-btn {
+  font-family: 'Inter', sans-serif !important;
+  background-color: #F4F5FF;
+  color: #263D8F;
+}
+
+#v-btn-prio {
+  font-family: 'Inter', sans-serif !important;
   background-color: #263D8F;
   color: #F4F5FF;
 }
@@ -164,4 +171,21 @@ h1 {
   color: #263D8F !important;
   font-size: 50px;
 
+}
+
+.remarks-field {
+  height: 150px ;
+  padding: 10px 0px 0px;
+}
+
+h5 {
+  font-family: 'Inter', sans-serif;
+  color:#263D8F;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+#text-field {
+  border-radius: 10% !important;
+  border-color: #263D8F !important;
 }

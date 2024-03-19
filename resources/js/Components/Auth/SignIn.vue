@@ -1,5 +1,5 @@
 <template>
-   <v-container fluid class="my-0 mx-0 py-0 px-0">
+   <v-container fluid class="my-0 mx-0 py-0 px-0 h-screen">
     <v-layout row wrap>
 
      <v-flex xs12 md4 class="logo h-screen" >
@@ -20,12 +20,3 @@
   </v-container>
 </template>
 
-<script>
-import Footer from '@/Components/Layout/Footer.vue'; 
-
-export default {
-  components: {
-    Footer
-  }
-}
-</script>
