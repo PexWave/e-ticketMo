@@ -11,23 +11,27 @@
 
         <v-hover>
           <template v-slot:default="{ isHovering, props }">
+          <a href="/supervisor-dashboard">
             <v-list-item link :class="{ 'blue-hover': isHovering }" v-bind="props">
               <v-list-item-content class="text-icon">
                 <v-icon icon="fas fa-home" size="20px" class="drawer-icon"/>
                 Home
               </v-list-item-content>
             </v-list-item>
+          </a>
           </template>
         </v-hover>
 
         <v-hover>
           <template v-slot:default="{ isHovering, props }">
+          <a href="offices">
             <v-list-item link :class="{ 'blue-hover': isHovering }" v-bind="props">
               <v-list-item-content class="text-icon">
                 <v-icon icon="fas fa-briefcase" size="20px" class="drawer-icon"/>
                 Offices
               </v-list-item-content>
             </v-list-item>
+            </a>
           </template>
         </v-hover>
 

@@ -1,7 +1,7 @@
 <template>
  <v-layout>
   <v-navigation-drawer app class="sidebar" width="300">
-      <v-list class="px-8 py-30">
+      <v-list class="sidebar px-8 py-30">
 
         <v-list-item link>
               <v-list-item-content>
@@ -11,23 +11,27 @@
 
         <v-hover>
           <template v-slot:default="{ isHovering, props }">
+          <a href="/client-home"> 
             <v-list-item link :class="{ 'blue-hover': isHovering }" v-bind="props">
               <v-list-item-content class="text-icon">
                 <v-icon icon="fas fa-home" size="20px" class="drawer-icon"/>
                 Home
               </v-list-item-content>
             </v-list-item>
+          </a>
           </template>
         </v-hover>
 
         <v-hover>
           <template v-slot:default="{ isHovering, props }">
+          <a href="/createTicket"> 
             <v-list-item link :class="{ 'blue-hover': isHovering }" v-bind="props">
               <v-list-item-content class="text-icon">
                 <v-icon icon="fas fa-ticket" size="20px" class="drawer-icon"/>
                 Create a Ticket
               </v-list-item-content>
             </v-list-item>
+          </a>
           </template>
         </v-hover>
 

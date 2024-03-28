@@ -5,6 +5,8 @@ const ClientHomepage = () => import("@/Components/Client/ClientHomepage.vue");
 const CreateTicket = () => import("@/Components/Forms/CreateTicket.vue");
 const CreateTask = () => import("@/Components/Forms/CreateTask.vue");
 const CreateUsers= () => import("@/Components/Forms/CreateUsers.vue");
+const Offices= () => import("@/Components/Supervisor/Offices.vue");
+
 const Home = () => import("@/Components/Home.vue");
 
 
@@ -62,6 +64,14 @@ const routes = [
                 name: "auth.createUsers",
                 component: CreateUsers,
             },
+
+            {
+                path: "/offices",
+                name: "auth.offices",
+                component: Offices,
+            },
+
+            
         ],
     },
 ];

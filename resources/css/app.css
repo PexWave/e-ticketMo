@@ -189,3 +189,18 @@ h5 {
   border-radius: 10% !important;
   border-color: #263D8F !important;
 }
+
+.sidebar a {
+  text-decoration: none;
+  color: #F4F5FF;
+}
+
+#action-icon {
+  padding: 15px;
+  color: #263D8F;
+}
+
+.office-table {
+  font-family: 'Inter', sans-serif;
+  color: #263D8F !important;
+}

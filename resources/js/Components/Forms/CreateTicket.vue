@@ -11,7 +11,6 @@
     <v-text-field
         id="text-field"
         variant="solo"
-        label= "Office"
         readonly
 >
     </v-text-field>
@@ -21,7 +20,8 @@
     label= "Client Type"
     variant="solo"
     outlined
-    :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+    :items="[]"
+    v-model = "name"
     >
     </v-select>
 
@@ -29,7 +29,7 @@
     <v-select
     label= "Task"
     variant="solo"
-    :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+    :items="['Monitor repair', 'OS Installation', 'Server Maintenance']"
     ></v-select>
 
     <h5> Remarks </h5>
@@ -62,12 +62,13 @@
 <script>
 import Footer from '@/Components/Layout/Footer.vue'; 
 import Sidebar from '@/Components/Client/ClientSidebar.vue'; 
-
+import useClient from "@/Composables/ClientType";
+ 
 
 export default {
   components: {
     Footer,
     Sidebar
-  }
+  },
 }
 </script>
