@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             TaskTypeSeeder::class,
             TicketSeeder::class,
-            ITEmployeeSeeder::class
+            ITEmployeeSeeder::class,
+            UserClientTypeSeeder::class
         ]);
     }
 }
