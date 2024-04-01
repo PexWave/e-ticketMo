@@ -119,5 +119,6 @@ Route::controller(ExtensionTimeController::class)->group(function(){
     Route::put('/update-extension-time/{id}', 'update');
     Route::get('/get-extension-time/{id}', 'show');
     Route::delete('/delete-extension-time/{id}', 'destroy');
-});
+    Route::post('/request-extension/{ticketID}', 'requestExtension');
+}); 
 

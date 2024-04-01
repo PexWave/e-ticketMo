@@ -117,4 +117,8 @@ class ExtensionTimeController extends Controller
                ], 500);        
             }
     }
+
+    public function requestExtension(string $ticketID){
+        
+    }
 }

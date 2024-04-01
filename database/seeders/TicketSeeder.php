@@ -13,6 +13,19 @@ class TicketSeeder extends Seeder
      */
     public function run(): void
     {
-        Ticket::factory()->count(3)->create();
+        $tickets = [
+            [
+                "user_id" => 1,
+                "ticket_status" => "Pending",
+             
+                "task_type_id" => 2,
+                "assigned_to" => 2,
+             
+            ],
+        ];
+
+        foreach ($tickets as $ticket){
+            Ticket::factory()->create($ticket);
+        }
     }
 }
