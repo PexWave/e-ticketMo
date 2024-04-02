@@ -16,7 +16,6 @@ class AssigningTicketController extends Controller
 
     private function filterEmployees($filters) {
         try {
-            
         return DB::table('it_employees')
         ->where('skill_level', '>=', $filters['difficulty'])
         ->where('category',$filters['category'])
