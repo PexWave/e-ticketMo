@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('tickets', function(Blueprint $table){
             $table->foreignId('assigned_to')->constrained('it_employees')->onDelete('CASCADE')->nullable();
             $table->foreignId('transferred_to')->constrained('it_employees')->onDelete('CASCADE')->nullable();
-            $table->tinyInteger('transferred_by')->constrained('it_employees')->onDelete('CASCADE')->nullable();
+            $table->foreignId('transferred_by')->constrained('it_employees')->onDelete('CASCADE')->nullable();
             $table->timestamp('new_resolve')->nullable();
         });
     }

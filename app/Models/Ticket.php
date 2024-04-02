@@ -24,7 +24,11 @@ class Ticket extends Model
         'modified_date',
         'reference_date',
         'remarks',
-        'task_type_id'
+        'task_type_id',
+        'assigned_to',
+        'transferred_to',
+        'transferred_by',
+        'new_resolve',
     ];
 
     public function extension_requests(): HasMany
