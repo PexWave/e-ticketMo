@@ -1,3 +1,1 @@
-<template>
-sheesh
-</template>
+<template>sheesh</template>

@@ -11,7 +11,6 @@ use App\Http\Controllers\Api\ItStaffController;
 use App\Http\Controllers\api\TaskTypeController;
 use App\Http\Controllers\api\TicketController;
 use App\Http\Controllers\Api\UserClientController;
-use App\Models\UserClientType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +42,7 @@ Route::controller(ItStaffController::class)->group(function(){
 Route::apiResource('/office', OfficeController::class);
 Route::controller(OfficeController::class)->group(function(){
     Route::post('/office', 'store');
+    Route::get('/office/{id}', 'show');
     Route::put('/office/{id}', 'update');
     Route::delete('/office/{id}','destroy');
 });
@@ -81,6 +81,7 @@ Route::controller(ClientTypeController::class)->group(function() {
 Route::apiResource('/user', UserController::class);
 Route::controller(UserController::class)->group(function() {
     Route::post('/user','store');
+    Route::get('/user/{id}','show');
     Route::put('/user/{id}','update');
     Route::delete('/user/{id}', 'destroy');
 });
@@ -90,13 +91,14 @@ Route::apiResource('/client', UserClientController::class);
 Route::controller(UserClientController::class)->group(function() {
     Route::post('/client','store');
     Route::put('/client/{id}','update');
-    Route::delete('/client/{id}', 'update');
+    Route::delete('/client/{id}', 'destroy');
 });
 
 // ROUTES FOR TASK
 Route::apiResource('/task', TaskTypeController::class);
 Route::controller(TaskTypeController::class)->group(function() {
     Route::post('/task','store');
+    Route::get('/get-task/{id}','show');
     Route::put('/task/{id}','update');
     Route::delete('/task/{id}', 'destroy');
 });
@@ -107,6 +109,7 @@ Route::apiResource('/extract-tickets', TicketController::class);
 Route::controller(TicketController::class)->group(function(){
     Route::post('/add-ticket', 'store');
     Route::put('/update-ticket/{id}', 'update');
+    Route::get('/queue', 'queue');
     Route::get('/get-ticket/{id}', 'show');
     Route::delete('/delete-ticket/{id}', 'destroy');
 });

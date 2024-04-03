@@ -1,206 +1,210 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap");
 
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 .logo {
-  background-color: #263D8F;
+    background-color: #263d8f;
 }
 
 .sign-in {
-  background-color: #F4F5FF;
-  width: 100%;
-  font-family: "Inter", sans-serif;
+    background-color: #f4f5ff;
+    width: 100%;
+    font-family: "Inter", sans-serif;
 }
 
-.sign-in, .logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.sign-in,
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 h1 {
-  font-family: "Unbounded", sans-serif;
-  font-size: 48px;
-  color: #263D8F;
-
-
+    font-family: "Unbounded", sans-serif;
+    font-size: 48px;
+    color: #263d8f;
 }
 
 .footer {
-  justify-items: right;
-  background-color: transparent;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  z-index: 9999; 
+    justify-items: right;
+    background-color: transparent;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 9999;
 }
 
 .footer-content {
-  position: absolute;
-  font-size: 14px;
-  color: #263D8F;
-  line-height: 20px;
-  margin-left: 70%;
-  margin-right: 0;
-  bottom: 0;
-  right: 0;
+    position: absolute;
+    font-size: 14px;
+    color: #263d8f;
+    line-height: 20px;
+    margin-left: 70%;
+    margin-right: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .v-text-field {
-  border-radius: 20%;
+    border-radius: 20%;
 }
 
 #v-btn {
-  font-family: 'Inter', sans-serif !important;
-  background-color: #F4F5FF;
-  color: #263D8F;
+    font-family: "Inter", sans-serif !important;
+    background-color: #f4f5ff;
+    color: #263d8f;
 }
 
 #v-btn-prio {
-  font-family: 'Inter', sans-serif !important;
-  background-color: #263D8F;
-  color: #F4F5FF;
+    font-family: "Inter", sans-serif !important;
+    background-color: #263d8f;
+    color: #f4f5ff;
 }
 
 .sidebar {
-  background-color: #263D8F !important;
-  font-family: 'Inter', sans-serif !important;
-  color: #F4F5FF !important;
+    background-color: #263d8f !important;
+    font-family: "Inter", sans-serif !important;
+    color: #f4f5ff !important;
 }
 
 .text-icon {
-  display: flex;
-  padding: 15px, 5px, 0px;
+    display: flex;
+    padding: 15px, 5px, 0px;
 }
 
 .text-icon :hover {
-  display: flex;
-  padding: 15px, 5px, 0px;
-  background-color: #F4F5FF !important;
-  color: #263D8F !important;
-  border-radius: 20% !important;
+    display: flex;
+    padding: 15px, 5px, 0px;
+    background-color: #f4f5ff !important;
+    color: #263d8f !important;
+    border-radius: 20% !important;
 }
 
 .drawer-icon {
-  margin-right: 15px;
+    margin-right: 15px;
 }
 
 .drawer-logo {
-  width: 100%; 
-  padding: 5px; 
-  margin-top: 30px; 
-  margin-bottom: 30px;
+    width: 100%;
+    padding: 5px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .total-tickets {
-  background-color: #263D8F;
-  align-items: center;
-  justify-content: center;
-  border-radius: 20px;
-  box-shadow: 0 0 10px rgba(77, 77, 77, 0.5) !important;
-
+    background-color: #263d8f;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(77, 77, 77, 0.5) !important;
 }
 
 .total-tickets h2 {
-  color: #F4F5FF !important;
-  font-family: "Unbounded", sans-serif;
-  font-size: 30px;
+    color: #f4f5ff !important;
+    font-family: "Unbounded", sans-serif;
+    font-size: 30px;
 }
 
 .total-tickets h1 {
-  color: #F4F5FF !important;
-  font-size: 80px;
+    color: #f4f5ff !important;
+    font-size: 80px;
 }
 
 .ticket-count {
-  background-color: #263D8F !important;
-  border-radius: 10px !important;
-  text-align: center;
-  font-family: "Unbounded", sans-serif;
-  font-size: 30px;
-  color: #F4F5FF !important;  
-  box-shadow: 0 0 10px rgba(77, 77, 77, 0.5) !important;
+    background-color: #263d8f !important;
+    border-radius: 10px !important;
+    text-align: center;
+    font-family: "Unbounded", sans-serif;
+    font-size: 30px;
+    color: #f4f5ff !important;
+    box-shadow: 0 0 10px rgba(77, 77, 77, 0.5) !important;
 }
 
 .ticket-count h1 {
-  color: #F4F5FF !important;
-  font-size: 50px;
+    color: #f4f5ff !important;
+    font-size: 50px;
 }
 
 .ticket-count h2 {
-  color: #F4F5FF !important;
-  font-size: 18px;
+    color: #f4f5ff !important;
+    font-size: 18px;
 }
 
 .row3 {
-  text-align: center;
-  font-family: 'Inter', sans-serif;
-  color:#263D8F;
-  font-size: 25px;
-  font-weight: bold;
+    text-align: center;
+    font-family: "Inter", sans-serif;
+    color: #263d8f;
+    font-size: 25px;
+    font-weight: bold;
 }
 
-
-.office-count, .user-count {
-  background-color: #F4F5FF !important;
-  border-radius: 10px !important;
-  text-align: center;
-  font-family: "Unbounded", sans-serif;
-  font-size: 30px;
-  color: #263D8F !important; 
-  box-shadow: 0 0 10px rgba(77, 77, 77, 0.5) !important;
-
+.office-count,
+.user-count {
+    background-color: #f4f5ff !important;
+    border-radius: 10px !important;
+    text-align: center;
+    font-family: "Unbounded", sans-serif;
+    font-size: 30px;
+    color: #263d8f !important;
+    box-shadow: 0 0 10px rgba(77, 77, 77, 0.5) !important;
 }
 
 .user-count h1 {
-  color: #263D8F !important;
-  font-size: 50px;
+    color: #263d8f !important;
+    font-size: 50px;
 }
 
 .user-count h2 {
-  color: #263D8F !important;
-  font-size: 20px;
+    color: #263d8f !important;
+    font-size: 20px;
 }
 
 .office-count h2 {
-  color: #263D8F !important;
-  font-size: 20px;
+    color: #263d8f !important;
+    font-size: 20px;
 }
 
-.office-count h1{
-  color: #263D8F !important;
-  font-size: 50px;
-
+.office-count h1 {
+    color: #263d8f !important;
+    font-size: 50px;
 }
 
 .remarks-field {
-  height: 150px ;
-  padding: 10px 0px 0px;
+    height: 150px;
+    padding: 10px 0px 0px;
 }
 
 h5 {
-  font-family: 'Inter', sans-serif;
-  color:#263D8F;
-  font-size: 15px;
-  font-weight: bold;
+    font-family: "Inter", sans-serif;
+    color: #263d8f;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 #text-field {
-  border-radius: 10% !important;
-  border-color: #263D8F !important;
+    border-radius: 10% !important;
+    border-color: #263d8f !important;
 }
 
 .sidebar a {
-  text-decoration: none;
-  color: #F4F5FF;
+    text-decoration: none;
+    color: #f4f5ff;
 }
 
 #action-icon {
-  padding: 15px;
-  color: #263D8F;
+    padding: 15px;
+    color: #263d8f;
 }
 
 .office-table {
-  font-family: 'Inter', sans-serif;
-  color: #263D8F !important;
+    font-family: "Inter", sans-serif;
+    color: #263d8f !important;
+}
+
+.input-box {
+    width: 100%;
+    outline: none;
 }

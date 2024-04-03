@@ -1,74 +1,205 @@
 <template>
-<Sidebar />
-<v-layout>
-<v-col cols=3 class="px-10 py-10 mt-20">
-    <!--ignore this -->
-    </v-col>
-<v-col>
-<v-form class="px-10 py-10 mx-10 my-10">
+    <Sidebar />
+    <v-layout>
+        <v-col cols="3" class="px-10 py-10 mt-20">
+            <!--ignore this -->
+        </v-col>
+        <v-col>
+            <v-form class="px-10 py-10 mx-10 my-10">
+                <h5>Office</h5>
+                <v-text-field
+                    id="text-field"
+                    v-model="officeId"
+                    :value="office.name"
+                    variant="solo"
+                    readonly
+                />
 
-    <h5> Office </h5>
-    <v-text-field
-        id="text-field"
-        variant="solo"
-        readonly
->
-    </v-text-field>
+                <h5>Client Type</h5>
+                <!-- <v-select
+                    label="Task"
+                    :items="clientTypes"
+                    item-value="id"
+                    v-model="selectedClientTypeId"
+                ></v-select> -->
 
-    <h5> Client Type </h5>
-    <v-select
-    label= "Client Type"
-    variant="solo"
-    outlined
-    :items="[]"
-    v-model = "name"
-    >
-    </v-select>
+                <select
+                    id="client"
+                    v-model="selectedClientTypeId"
+                    class="input-box transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md shadow-sm border border-gray-300 hover:border-gray-400 px-3 py-2"
+                    placeholder="Select a Client"
+                >
+                    <option
+                        v-for="client in clientTypes"
+                        :key="client.id"
+                        :value="client.id"
+                        class="py-2"
+                    >
+                        {{ client.name }}
+                    </option>
+                </select>
 
-    <h5> Task </h5>
-    <v-select
-    label= "Task"
-    variant="solo"
-    :items="['Monitor repair', 'OS Installation', 'Server Maintenance']"
-    ></v-select>
+                <br /><br />
+                <h5>Task</h5>
 
-    <h5> Remarks </h5>
-    <v-text-field
-            v-model="Remarks"
-            class="remarks-field"
-            id="text-field"
-            label= "Remarks"
-            variant="solo"
-          >
-    </v-text-field>
+                <!-- <v-select
+                    label="Task"
+                    variant="solo"
+                    :items="[
+                        'Monitor repair',
+                        'OS Installation',
+                        'Server Maintenance',
+                    ]"
+                ></v-select> -->
 
-    <v-row justify="end">
-    <v-col cols=2>
-    <v-btn rounded class="w-100" id="v-btn">Cancel</v-btn>
-    </v-col>
-    <v-col cols=2>
-    <v-btn rounded class="w-100" id="v-btn-prio">Create</v-btn>
-    </v-col>
-    </v-row>
+                <select
+                    id="taskType"
+                    v-model="selectedTaskTypeId"
+                    class="input-box transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md shadow-sm border border-gray-300 hover:border-gray-400 px-3 py-2"
+                    placeholder="Select a Task type"
+                >
+                    <option
+                        v-for="taskType in taskTypes"
+                        :key="taskType.id"
+                        :value="taskType.id"
+                        class="py-2"
+                    >
+                        {{ taskType.task }}
+                    </option>
+                </select>
 
-</v-form>
-</v-col>
-</v-layout>
-<Footer />
+                <br /><br />
+                <h5>Remarks</h5>
+                <v-text-field
+                    v-model="remarksInput"
+                    class="remarks-field"
+                    id="text-field"
+                    label="Remarks"
+                    variant="solo"
+                >
+                </v-text-field>
 
-
+                <v-row justify="end">
+                    <v-col cols="2">
+                        <v-btn rounded class="w-100" id="v-btn">Cancel</v-btn>
+                    </v-col>
+                    <v-col cols="2">
+                        <v-btn
+                            rounded
+                            class="w-100"
+                            id="v-btn-prio"
+                            @click="createTicket"
+                            >Create</v-btn
+                        >
+                    </v-col>
+                </v-row>
+            </v-form>
+        </v-col>
+    </v-layout>
+    <!-- <Footer /> -->
 </template>
 
 <script>
-import Footer from '@/Components/Layout/Footer.vue'; 
-import Sidebar from '@/Components/Client/ClientSidebar.vue'; 
-import useClient from "@/Composables/ClientType";
- 
+import Footer from "@/Components/Layout/Footer.vue";
+import Sidebar from "@/Components/Client/ClientSidebar.vue";
+
+// import composables
+import useOffice from "@/Composables/Offices";
+import useClientTypes from "@/Composables/ClientTypes";
+import useTaskTypes from "@/Composables/TaskType";
+import useUsers from "@/Composables/Users";
+
+import { ref, reactive, onMounted } from "vue";
 
 export default {
-  components: {
-    Footer,
-    Sidebar
-  },
-}
+    setup() {
+        const { office, getOffice } = useOffice();
+        const { clientTypes, clientType, getClientTypes, getClientType } =
+            useClientTypes();
+        const { taskTypes, taskType, getTaskTypes, getTaskType } =
+            useTaskTypes();
+        const { user, getUser } = useUsers();
+
+        const officeId = ref(null);
+        const selectedClientTypeId = ref(null);
+        const selectedTaskTypeId = ref(null);
+        const remarksInput = ref(null);
+
+        const userId = 1;
+
+        onMounted(async () => {
+            try {
+                await getUser(userId).then(() => {
+                    getOffice(user.value.office_id);
+                    officeId.value = user.value.office_id;
+                });
+                await getClientTypes();
+                await getTaskTypes();
+            } catch (error) {
+                console.error("Failed to fetch offices:", error);
+            }
+        });
+
+        // functions
+        const createTicket = async () => {
+            // let userClientTypeData = {
+            //     user_id: userId,
+            //     client_type_id: selectedClientTypeId.value,
+            // };
+            // await axios.post("/api/add-ticket", data, {
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            // });
+
+            const importance = await getClientType(
+                selectedClientTypeId.value
+            ).then(() => {
+                return clientType.value.importance;
+            });
+
+            const urgency = await getTaskType(selectedTaskTypeId.value).then(
+                () => {
+                    return taskType.value.urgency;
+                }
+            );
+
+            console.log(importance);
+            console.log(urgency);
+            // let ticketData = {
+            //     importance: importance,
+            //     urgency: urgency,
+            //     user_id: newTicket.user_id,
+            //     ticket_status: "Pending",
+            //     actual_response: new Date().toISOString().slice(0, 16),
+            //     actual_resolve: new Date().toISOString().slice(0, 16),
+            //     remarks: "adsdf",
+            //     task_type_id: newTicket.task_type_id,
+            //     modified_date: new Date().toISOString().slice(0, 16),
+            //     reference_date: new Date().toISOString().slice(0, 16),
+            // };
+            // await axios.post("/api/add-ticket", data, {
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            // });
+        };
+
+        return {
+            office,
+            clientTypes,
+            taskTypes,
+            officeId,
+            selectedClientTypeId,
+            selectedTaskTypeId,
+            remarksInput,
+            createTicket,
+        };
+    },
+
+    components: {
+        Footer,
+        Sidebar,
+    },
+};
 </script>
