@@ -13,10 +13,9 @@ export default function useTickets() {
         tickets.value = response.data.data;
     };
 
-    const getTicketsForQueue = async () => {
-        let response = await axios.get("/api/queue/");
+    const getTicketsForQueue = async (ticketStatus) => {
+        let response = await axios.get(`/api/queue/${ticketStatus}`);
         tickets.value = response.data;
-        console.log(response.data);
     };
 
     const getTicket = async (id) => {

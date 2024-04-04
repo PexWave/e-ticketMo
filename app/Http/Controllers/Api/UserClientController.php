@@ -71,7 +71,6 @@ class UserClientController extends Controller
     }
 
   
-
     public function destroy(string $clientId)
     {
         try{

@@ -97,7 +97,7 @@ class TicketController extends Controller
     }
     
 
-    public function queue()
+    public function queue(string $ticketStatus)
     {   
         // Fetch all tickets
         $tickets = Ticket::all();
@@ -120,7 +120,7 @@ class TicketController extends Controller
             $taskType = $this->extractTaskType($taskTypeId);
     
             // If a matching task type is found, add its ID to the result array
-            if ($taskType && $ticket->ticket_status === 'Pending') {
+            if ($taskType && ($ticketStatus === "All Items" ? $ticket->ticket_status !== $ticketStatus : $ticket->ticket_status === $ticketStatus)) {
                 $obj = new \stdClass();
     
                 // Populate the object with data

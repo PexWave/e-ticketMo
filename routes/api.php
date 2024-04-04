@@ -110,7 +110,7 @@ Route::apiResource('/extract-tickets', TicketController::class);
 Route::controller(TicketController::class)->group(function(){
     Route::post('/add-ticket', 'store');
     Route::put('/update-ticket/{id}', 'update');
-    Route::get('/queue', 'queue');
+    Route::get('/queue/{ticket_status}', 'queue');
     Route::get('/get-ticket/{id}', 'show');
     Route::delete('/delete-ticket/{id}', 'destroy');
 });
