@@ -29,6 +29,12 @@ class ClientTypeController extends Controller
         //
     }
 
+    public function clientTypes(string $officeId)
+    {
+        $clientTypes = ClientType::where('office_id', $officeId)->get();
+        return $clientTypes;
+    }
+    
     /**
      * Store a newly created resource in storage.
      */

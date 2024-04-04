@@ -8,7 +8,7 @@ export default function useclientTypes() {
     const router = useRouter();
     const errors = ref("");
 
-    const getClientTypes = async () => {
+    const extractClientTypes = async () => {
         let response = await axios.get("/api/extract-client-types");
         clientTypes.value = response.data.data;
     };
@@ -16,6 +16,11 @@ export default function useclientTypes() {
     const getClientType = async (id) => {
         let response = await axios.get("/api/get-client-type/" + id);
         clientType.value = response.data;
+    };
+
+    const getClientTypes = async (office_id) => {
+        let response = await axios.get(`/api/get-client-types/${office_id}`);
+        clientTypes.value = response.data;
     };
 
     const storeClientType = async (data) => {
@@ -55,5 +60,6 @@ export default function useclientTypes() {
         storeClientType,
         updateClientType,
         destroyClientType,
+        extractClientTypes,
     };
 }

@@ -70,6 +70,7 @@ Route::controller(CategoriesController::class)->group(function(){
 // Route::apiResource('/extract-client-types', ClientTypeController::class);
 Route::apiResource('/extract-client-types', ClientTypeController::class);
 Route::controller(ClientTypeController::class)->group(function() {
+    Route::get('/get-client-types/{office_id}', 'clientTypes');
     Route::post('/add-client-type', 'store');
     Route::put('/update-client-type/{id}', 'update');
     Route::get('/get-client-type/{id}', 'show');

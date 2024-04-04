@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TicketRequest;
 use App\Http\Resources\TaskTypeResource;
 use App\Http\Resources\TicketResource;
+use App\Http\Resources\UserClientTypeResource;
 use App\Models\ClientType;
 use App\Models\TaskType;
 use App\Models\Ticket;
@@ -27,14 +28,83 @@ class TicketController extends Controller
     }
 
 
+
+        /**
+     * checks if the user_id and client_type_id already exist in user_client_type table
+     */
+    public function checkIfUserClientTypeExists(string $userId, string $clientTypeId)
+    {
+        $userClientType = UserClientType::where('user_id', $userId)
+                                        ->where('client_type_id', $clientTypeId)
+                                        ->first();
+    
+        if ($userClientType) {
+            return $userClientType->id;
+        }
+    
+        try{
+            DB::beginTransaction();
+
+            $data = UserClientType::create([
+                'user_id' => $userId,
+                'client_type_id' => $clientTypeId,
+            ]);
+
+            DB::commit();
+
+            return new UserClientTypeResource($data);
+
+         }catch(\Throwable $th){
+            DB::rollBack();
+
+            return response()
+            ->json([
+                "message" => $th->getMessage()
+            ], 500);
+         }
+    }
+
+
+    
+    private function extractClientType(string $taskTypeId)
+    {
+        $clientType = ClientType::find($taskTypeId);
+        if ($clientType === null) {
+            // Log or handle the case where client type is not found
+            return null;
+        }
+        return $clientType;
+    }
+    
+    private function extractTaskType(string $clientTypeId)
+    {
+        $taskType = TaskType::find($clientTypeId);
+        if ($taskType === null) {
+            // Log or handle the case where task type is not found
+            return null;
+        }
+        return $taskType;
+    }
+    
+    private function extractUserClientType(string $userClientTypeId)
+    {
+        $userClientType = UserClientType::find($userClientTypeId);
+        if ($userClientType === null) {
+            // Log or handle the case where user client type is not found
+            return null;
+        }
+        return $userClientType;
+    }
+    
+
     public function queue()
     {   
         // Fetch all tickets
         $tickets = Ticket::all();
-    
+        
         // Initialize an empty array to hold the results
         $combinedArr = [];
-    
+        
         // Loop through each ticket
         foreach ($tickets as $ticket) {
             // Get the task type ID from the ticket table
@@ -42,48 +112,44 @@ class TicketController extends Controller
             $userClientTypeId = $ticket->user_id; // to be changed to userclienttypeid
     
             // Find the corresponding task type in the tasktype table
-            $taskType = TaskType::find($taskTypeId);
-            $userClientType = UserClientType::find($userClientTypeId);
-
+            $userClientType = $this->extractUserClientType($userClientTypeId);
+            
             $clientTypeId = $userClientType->client_type_id;
-
-            $clientType = ClientType::find($clientTypeId);
+            
+            $clientType = $this->extractClientType($clientTypeId);
+            $taskType = $this->extractTaskType($taskTypeId);
     
             // If a matching task type is found, add its ID to the result array
             if ($taskType && $ticket->ticket_status === 'Pending') {
-
                 $obj = new \stdClass();
-
-                // from tickets table
+    
+                // Populate the object with data
                 $obj->ticket_id = $ticket->id;
                 $obj->task_type_id = $ticket->task_type_id;
                 $obj->user_client_type_id = $ticket->user_id;
                 $obj->ticket_status = $ticket->ticket_status;
                 $obj->reference_date = $ticket->reference_date;
-
+    
                 // from task_types table
                 $obj->task = $taskType->task;
                 $obj->category_id = $taskType->category_id;
                 $obj->difficulty = $taskType->difficulty;
                 $obj->urgency = $taskType->urgency;
-                $obj->response_time = $taskType->response_time;
-                $obj->resolve_time = $taskType->resolve_time;
-                
-                // from user_client_types table
-                $obj->client_type_id = $userClientType->client_type_id;
                 
                 // from client_types table
                 $obj->importance = $clientType->importance;
                 $obj->client_type = $clientType->name;
-
+    
                 // insert object in this array
                 $combinedArr[] = $obj;
             }
         }
-    
-        // Return the combined array containing the IDs
+        
+        // Return the combined array containing the tickets with their importance
         return $combinedArr;
     }
+    
+
     
 
     /**
@@ -94,33 +160,47 @@ class TicketController extends Controller
         //
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(TicketRequest $request)
     {
-        // $ticket = $request->validated();
-        event(new TicketQueue($request->input('importance'), $request->input('urgency'), $request->input('user_id'), $request->input('ticket_status'),$request->input('actual_response'), $request->input('actual_resolve'), $request->input('modified_date'),$request->input('reference_date'), $request->input('remarks'),$request->input('task_type_id')));
+        $ticket = $request->validated();
 
-        // try {
-        //     DB::beginTransaction();
+        $userClientTypeId = $this->checkIfUserClientTypeExists($ticket['user_id'], $ticket['client_type_id']);
 
-        //     $ticketData = Ticket::create($ticket);
+        $clientTypeId = $ticket['client_type_id'];
+        unset($ticket['client_type_id']);
 
-        //     DB::commit();
+        // $ticket['user_id'] = $userClientTypeId; //to be changed into user_client_type_id
 
-        // } catch (\Throwable $th) {
-        //     DB::rollBack();
-        //     return response()->json([
-        //         "status" => "Failed",
-        //         "message" => $th->getMessage(),
-        //        ], 500);        
-        //     }
+        // save the data to the ticket table
+        try {
+            DB::beginTransaction();
 
-        // return new TicketResource($ticketData);
+            $ticketData = Ticket::create($ticket);
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                "status" => "Failed",
+                "message" => $th->getMessage(),
+               ], 500);        
+            }
+
+        $createdTicketData = new TicketResource($ticketData);
+        
+        // getting the importance from client type table for queueing
+        $clientType = $this->extractClientType($clientTypeId);
+        $taskType = $this->extractTaskType($ticket['task_type_id']);
+
+        // event for realtime updating in the queue
+        event(new TicketQueue($createdTicketData['ticket_id'],$userClientTypeId, $ticket['task_type_id'], $ticket['ticket_status'], $ticket['reference_date'],$taskType->task, $taskType->category_id, $taskType->difficulty,$taskType->urgency, $clientType->importance,$clientType->name));
 
         return [];
-
     }
 
     /**

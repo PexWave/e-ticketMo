@@ -106,19 +106,21 @@ import Sidebar from "@/Components/Client/ClientSidebar.vue";
 // import composables
 import useOffice from "@/Composables/Offices";
 import useClientTypes from "@/Composables/ClientTypes";
+import useUserClientTypes from "@/Composables/UserClientType";
 import useTaskTypes from "@/Composables/TaskType";
 import useUsers from "@/Composables/Users";
+import useTickets from "@/Composables/Tickets";
 
 import { ref, reactive, onMounted } from "vue";
 
 export default {
     setup() {
-        const { office, getOffice } = useOffice();
-        const { clientTypes, clientType, getClientTypes, getClientType } =
-            useClientTypes();
-        const { taskTypes, taskType, getTaskTypes, getTaskType } =
-            useTaskTypes();
+        const { storeTicket } = useTickets();
         const { user, getUser } = useUsers();
+        const { userClientType } = useUserClientTypes();
+        const { office, getOffice } = useOffice();
+        const { taskTypes, getTaskTypes } = useTaskTypes();
+        const { clientTypes, getClientTypes } = useClientTypes();
 
         const officeId = ref(null);
         const selectedClientTypeId = ref(null);
@@ -129,60 +131,36 @@ export default {
 
         onMounted(async () => {
             try {
-                await getUser(userId).then(() => {
+                await getUser(userId).then(async () => {
                     getOffice(user.value.office_id);
                     officeId.value = user.value.office_id;
+                    await getClientTypes(officeId.value).then(() => {
+                        console.log(clientTypes);
+                    });
+                    await getTaskTypes();
                 });
-                await getClientTypes();
-                await getTaskTypes();
             } catch (error) {
                 console.error("Failed to fetch offices:", error);
             }
         });
 
-        // functions
         const createTicket = async () => {
-            // let userClientTypeData = {
-            //     user_id: userId,
-            //     client_type_id: selectedClientTypeId.value,
-            // };
-            // await axios.post("/api/add-ticket", data, {
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //     },
-            // });
-
-            const importance = await getClientType(
-                selectedClientTypeId.value
-            ).then(() => {
-                return clientType.value.importance;
-            });
-
-            const urgency = await getTaskType(selectedTaskTypeId.value).then(
-                () => {
-                    return taskType.value.urgency;
-                }
-            );
-
-            console.log(importance);
-            console.log(urgency);
-            // let ticketData = {
-            //     importance: importance,
-            //     urgency: urgency,
-            //     user_id: newTicket.user_id,
-            //     ticket_status: "Pending",
-            //     actual_response: new Date().toISOString().slice(0, 16),
-            //     actual_resolve: new Date().toISOString().slice(0, 16),
-            //     remarks: "adsdf",
-            //     task_type_id: newTicket.task_type_id,
-            //     modified_date: new Date().toISOString().slice(0, 16),
-            //     reference_date: new Date().toISOString().slice(0, 16),
-            // };
-            // await axios.post("/api/add-ticket", data, {
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //     },
-            // });
+            let ticketData = {
+                user_id: userId, // to be changed later to userClientType.value
+                client_type_id: selectedClientTypeId.value,
+                task_type_id: selectedTaskTypeId.value,
+                ticket_status: "Pending",
+                actual_response: null,
+                actual_resolve: null,
+                remarks: remarksInput.value,
+                modified_date: new Date().toISOString().slice(0, 16),
+                reference_date: new Date().toISOString().slice(0, 16),
+            };
+            try {
+                await storeTicket(ticketData);
+            } catch (error) {
+                console.error("Error creating ticket:", error);
+            }
         };
 
         return {

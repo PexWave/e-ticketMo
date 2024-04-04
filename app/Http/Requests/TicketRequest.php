@@ -22,9 +22,8 @@ class TicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'urgency' => "",
-            'importance' => "",
             'user_id' => "",
+            'client_type_id' => "",
             'ticket_status' => "",
             'actual_response' => "",
             'actual_resolve' => "",
