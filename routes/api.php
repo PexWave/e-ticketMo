@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\ClientTypeController;
 use App\Http\Controllers\Api\ItStaffController;
 use App\Http\Controllers\Api\TaskTypeController;
 use App\Http\Controllers\Api\TicketController;
+use App\Http\Controllers\Api\AssigningTicketController;
 use App\Http\Controllers\Api\UserClientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -108,14 +109,17 @@ Route::controller(TaskTypeController::class)->group(function() {
 // ROUTES FOR TICKET
 Route::apiResource('/extract-tickets', TicketController::class);
 Route::controller(TicketController::class)->group(function(){
-    Route::post('/add-ticket', 'store');
-    Route::post('/assign-ticket', 'assign');
-    
+    Route::post('/add-ticket', 'store');    
     Route::put('/update-ticket/{id}', 'update');
     Route::get('/queue/{ticket_status}', 'queue');
     Route::get('/get-ticket/{id}', 'show');
     Route::delete('/delete-ticket/{id}', 'destroy');
 });
+//ROUTES FOR ASSIGNING TICKET
+Route::controller(AssigningTicketController::class)->group(function(){
+    Route::post('/assign-ticket', 'assignTicketToEmployee');    
+});
+
 
 
 // ROUTES FOR EXTENSION TIME
