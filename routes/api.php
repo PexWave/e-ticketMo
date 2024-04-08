@@ -1,15 +1,15 @@
 <?php
 
 
-use App\Http\Controllers\api\ExtensionTimeController;
+use App\Http\Controllers\Api\ExtensionTimeController;
 use App\Http\Controllers\Api\OfficeController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ClientTypeController;
 use App\Http\Controllers\Api\ItStaffController;
-use App\Http\Controllers\api\TaskTypeController;
-use App\Http\Controllers\api\TicketController;
+use App\Http\Controllers\Api\TaskTypeController;
+use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\Api\UserClientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -109,6 +109,8 @@ Route::controller(TaskTypeController::class)->group(function() {
 Route::apiResource('/extract-tickets', TicketController::class);
 Route::controller(TicketController::class)->group(function(){
     Route::post('/add-ticket', 'store');
+    Route::post('/assign-ticket', 'assign');
+    
     Route::put('/update-ticket/{id}', 'update');
     Route::get('/queue/{ticket_status}', 'queue');
     Route::get('/get-ticket/{id}', 'show');

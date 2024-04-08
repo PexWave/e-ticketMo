@@ -47,6 +47,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import useTickets from "@/Composables/Tickets";
+import useAssigningTickets from "@/Composables/AssignTickets";
 import Pusher from "pusher-js";
 
 export default {
@@ -54,6 +55,8 @@ export default {
 
     setup() {
         const { tickets, getTicketsForQueue } = useTickets();
+        const { assignTicket } = useAssigningTickets();
+
         const ticketStatusFilter = ref("All Items");
 
         onMounted(() => {
@@ -86,7 +89,7 @@ export default {
                 sortAndAssignTickets();
             });
         };
-
+        
         const sortTickets = () => {
             const sortedTickets = [...tickets.value].sort((a, b) => {
                 const priorityA = Number(a.importance) + Number(a.urgency);
@@ -114,6 +117,7 @@ export default {
             sortTickets();
 
             // assign ticket to available staff
+            assignTicket(tickets);
         };
 
         const handleTicketStatusChange = () => {
