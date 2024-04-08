@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ExtensionTimeRequest;
 use App\Http\Resources\ExtensionTimeResource;
 use App\Models\ExtensionRequest;
+use App\Models\Ticket;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -31,27 +33,15 @@ class ExtensionTimeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ExtensionTimeRequest $request)
+    public function store(ExtensionTimeRequest $request, $id)
     {
         $extensionTime = $request->validated();
 
+        $extension_request = $this->requestExtension($id, $extensionTime['requested_by'], $extensionTime['reason']);
 
-        try {
-            DB::beginTransaction();
 
-            $extensionTimeData = ExtensionRequest::create($extensionTime);
-
-            DB::commit();
-
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return response()->json([
-                "status" => "Failed",
-                "message" => $th->getMessage(),
-               ], 500);        
-            }
-
-        return new ExtensionTimeResource($extensionTimeData);
+        echo $extension_request;
+        return new ExtensionTimeResource($extension_request);
     }
 
     /**
@@ -118,7 +108,38 @@ class ExtensionTimeController extends Controller
             }
     }
 
-    public function requestExtension(string $ticketID){
+    public function requestExtension($id, $it_employee_id, $reason){
+        try {
+        DB::beginTransaction();
+        //get id ticket using router "/extensionRequest/{ID}"
+        $ticket_instance = Ticket::findOrFail($id);
+
+
+        $currentTime = Carbon::now();
+       
+        // create an extension based sino nag create ng request
+        $request_extension = ExtensionRequest::create([
+            'ticket_id' => $ticket_instance->id,
+            'extension_time' =>  $currentTime->addHour(),
+            'requested_by' => $it_employee_id,
+            'reason' => $reason,
+        ]);
+
+        DB::commit();
+
+        return $request_extension;
         
+        // id galing sa ticket table ma store sa ticket_id na attribute under extension table
+        //extension request was created pero yung status niya is pending , since hnd pa na approve ni supervisor
+        //yung status ng extension request will updated to approved
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+        
+            return response()->json([
+                "status" => "Failed",
+                "message" => $th->getMessage(),
+               ], 500);        
+        }
     }
 }

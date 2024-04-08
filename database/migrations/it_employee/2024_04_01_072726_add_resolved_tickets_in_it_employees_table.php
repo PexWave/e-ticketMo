@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('it_employees', function (Blueprint $table) {
-            $table->tinyInteger('resolved_tickets')->nullable();
+            $table->mediumInteger('resolved_tickets')->nullable();
         });
     }
 

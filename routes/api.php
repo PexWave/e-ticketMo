@@ -115,7 +115,7 @@ Route::controller(TicketController::class)->group(function(){
 // ROUTES FOR EXTENSION TIME
 Route::apiResource('/extract-extension-time-data', ExtensionTimeController::class);
 Route::controller(ExtensionTimeController::class)->group(function(){
-    Route::post('/add-extension-time', 'store');
+    Route::post('/add-extension-time/{id}', 'store');
     Route::put('/update-extension-time/{id}', 'update');
     Route::get('/get-extension-time/{id}', 'show');
     Route::delete('/delete-extension-time/{id}', 'destroy');

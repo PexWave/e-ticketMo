@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tickets', function(Blueprint $table){
-            $table->foreignId('assigned_to')->constrained('it_employees')->onDelete('CASCADE')->nullable();
-            $table->foreignId('transferred_to')->constrained('it_employees')->onDelete('CASCADE')->nullable();
-            $table->foreignId('transferred_by')->constrained('it_employees')->onDelete('CASCADE')->nullable();
+            $table->foreignId('assigned_to')->nullable()->constrained('it_employees')->onDelete('CASCADE');
+            $table->foreignId('transferred_to')->nullable()->constrained('it_employees')->onDelete('CASCADE');
+            $table->foreignId('transferred_by')->nullable()->constrained('it_employees')->onDelete('CASCADE');
             $table->timestamp('new_resolve')->nullable();
         });
     }

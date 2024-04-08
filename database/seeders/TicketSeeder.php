@@ -16,10 +16,9 @@ class TicketSeeder extends Seeder
         $tickets = [
             [
                 "user_id" => 1,
-                "ticket_status" => "Pending",
-             
-                "task_type_id" => 2,
+                "task_type_id" => 1,
                 "assigned_to" => 2,
+               
              
             ],
         ];
