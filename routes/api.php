@@ -1,15 +1,15 @@
 <?php
 
 
-use App\Http\Controllers\api\ExtensionTimeController;
+use App\Http\Controllers\Api\ExtensionTimeController;
 use App\Http\Controllers\Api\OfficeController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ClientTypeController;
 use App\Http\Controllers\Api\ItStaffController;
-use App\Http\Controllers\api\TaskTypeController;
-use App\Http\Controllers\api\TicketController;
+use App\Http\Controllers\Api\TaskTypeController;
+use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\Api\UserClientController;
 use App\Models\UserClientType;
 use Illuminate\Http\Request;
@@ -120,5 +120,7 @@ Route::controller(ExtensionTimeController::class)->group(function(){
     Route::get('/get-extension-time/{id}', 'show');
     Route::delete('/delete-extension-time/{id}', 'destroy');
     Route::post('/request-extension/{ticketID}', 'requestExtension');
+    Route::get('/getPending-request-extension', 'getPendingExtensionRequest');
+    Route::put('/update-extension-request-status/{id}', 'updateExtensionRequestStatus');
 }); 
 

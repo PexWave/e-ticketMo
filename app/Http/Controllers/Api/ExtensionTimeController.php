@@ -10,7 +10,7 @@ use App\Models\Ticket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use PhpParser\Node\Stmt\TryCatch;
 
 class ExtensionTimeController extends Controller
 {
@@ -140,6 +140,70 @@ class ExtensionTimeController extends Controller
                 "status" => "Failed",
                 "message" => $th->getMessage(),
                ], 500);        
+        }
+    }
+
+    // public function getPendingExtensionRequest(){
+    //     try {
+    //         DB::beginTransaction();
+            
+    //         $extension_request_instance = ExtensionRequest::where('extension_status', 'Pending')->get();
+
+    //         if ($extension_request_instance->isEmpty()){
+    //             return response()->json([
+    //                 "status"=> "Successfully fetched the data",
+    //                 "message"=>"No pending extension request found",
+    //                 "data"=>[],
+    //             ], 200);
+    //         }
+
+    //         DB::commit();
+
+    //         return $extension_request_instance;
+
+    //     } catch (\Throwable $th) {
+    //         DB::rollBack();
+        
+    //         return response()->json([
+    //             "status" => "Failed",
+    //             "message" => $th->getMessage(),s
+    //            ], 500);     
+    //     }
+    // }
+
+
+    //add condition if the fetched instance has a status of pending it will update the extension status and if the status is approved a message will show that the request is already approvesd
+    public function updateExtensionRequestStatus($id){
+        $approved_status = 'Approved';
+
+        try{
+            DB::beginTransaction();
+
+            $extension_request_instance = ExtensionRequest::findOrFail($id);
+            if ($extension_request_instance->extension_status === $approved_status){
+                return response()->json([
+                    "status" => "Info",
+                    "message" => "Extension status is already approved.",
+                ],200);
+            }
+            $extension_request_instance->extension_status = $approved_status;
+            $extension_request_instance->save();
+            
+            DB::commit();
+
+            return response()->json([
+                "status" => "Success",
+                "message" => "Extension status updated successfully!",
+                "data" => new ExtensionTimeResource($extension_request_instance),
+               ], 200);
+
+        }catch (\Throwable $th) {
+            DB::rollBack();
+        
+            return response()->json([
+                "status" => "Failed",
+                "message" => $th->getMessage(),
+               ], 500);     
         }
     }
 }

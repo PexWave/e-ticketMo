@@ -18,8 +18,11 @@ class TicketSeeder extends Seeder
                 "user_id" => 1,
                 "task_type_id" => 1,
                 "assigned_to" => 2,
-               
-             
+            ],
+            [
+                "user_id" => 2,
+                "task_type_id" => 2,
+                "assigned_to" => 1,
             ],
         ];
 

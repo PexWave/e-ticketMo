@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             TaskTypeSeeder::class,
             ITEmployeeSeeder::class,
             TicketSeeder::class,
-            
+            ExtentensionRequestSeeder::class,
         ]);
     }
 }
