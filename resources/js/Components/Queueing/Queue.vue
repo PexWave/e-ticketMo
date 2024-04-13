@@ -109,6 +109,35 @@ export default {
             console.log(tickets.value);
         };
 
+        // const sortTickets = (categoryId) => {
+        //     // Filter tickets based on categoryId
+        //     const filteredTickets = tickets.value.filter(
+        //         (ticket) => ticket.category_id === categoryId
+        //     );
+
+        //     // Sort the filtered tickets
+        //     const sortedTickets = [...filteredTickets].sort((a, b) => {
+        //         const priorityA = Number(a.importance) + Number(a.urgency);
+        //         const priorityB = Number(b.importance) + Number(b.urgency);
+
+        //         if (priorityA === priorityB) {
+        //             if (a.urgency === b.urgency) {
+        //                 return (
+        //                     new Date(a.reference_date) -
+        //                     new Date(b.reference_date)
+        //                 );
+        //             }
+        //             return b.urgency - a.urgency;
+        //         }
+
+        //         return priorityB - priorityA;
+        //     });
+
+        //     // Update tickets array with sorted and filtered tickets
+        //     tickets.value = sortedTickets;
+        //     console.log(tickets.value);
+        // };
+
         const sortAndAssignTickets = async () => {
             // Sort the tickets then assigning a ticket to available staff
             sortTickets();

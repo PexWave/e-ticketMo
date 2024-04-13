@@ -166,6 +166,7 @@ class TicketController extends Controller
      */
     public function store(TicketRequest $request)
     {
+        
         $ticket = $request->validated();
 
         $userClientTypeId = $this->checkIfUserClientTypeExists($ticket['user_id'], $ticket['client_type_id']);
