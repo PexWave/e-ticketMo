@@ -109,7 +109,7 @@ class TicketController extends Controller
         foreach ($tickets as $ticket) {
             // Get the task type ID from the ticket table
             $taskTypeId = $ticket->task_type_id;
-            $userClientTypeId = $ticket->user_id; // to be changed to userclienttypeid
+            $userClientTypeId = $ticket->user_client_type_id; // to be changed to userclienttypeid oakay
     
             // Find the corresponding task type in the tasktype table
             $userClientType = $this->extractUserClientType($userClientTypeId);
@@ -126,7 +126,7 @@ class TicketController extends Controller
                 // Populate the object with data
                 $obj->ticket_id = $ticket->id;
                 $obj->task_type_id = $ticket->task_type_id;
-                $obj->user_client_type_id = $ticket->user_id;
+                $obj->user_client_type_id = $ticket->user_client_type_id;
                 $obj->ticket_status = $ticket->ticket_status;
                 $obj->reference_date = $ticket->reference_date;
     
@@ -174,7 +174,7 @@ class TicketController extends Controller
         $clientTypeId = $ticket['client_type_id'];
         unset($ticket['client_type_id']);
 
-        // $ticket['user_id'] = $userClientTypeId; //to be changed into user_client_type_id
+        $ticket['user_client_type_id'] = $userClientTypeId; //to be changed into user_client_type_id
 
         // save the data to the ticket table
         try {
@@ -191,7 +191,8 @@ class TicketController extends Controller
                 "message" => $th->getMessage(),
                ], 500);        
             }
-
+        
+        
         $createdTicketData = new TicketResource($ticketData);
         
         // getting the importance from client type table for queueing
@@ -199,7 +200,7 @@ class TicketController extends Controller
         $taskType = $this->extractTaskType($ticket['task_type_id']);
 
         // event for realtime updating in the queue
-        event(new TicketQueue($createdTicketData['ticket_id'],$userClientTypeId, $ticket['task_type_id'], $ticket['ticket_status'], $ticket['reference_date'],$taskType->task, $taskType->category_id, $taskType->difficulty,$taskType->urgency, $clientType->importance,$clientType->name));
+        event(new TicketQueue($createdTicketData['id'],$userClientTypeId, $ticket['task_type_id'], $ticket['ticket_status'], $ticket['reference_date'],$taskType->task, $taskType->category_id, $taskType->difficulty,$taskType->urgency, $clientType->importance,$clientType->name));
 
         return [];
     }

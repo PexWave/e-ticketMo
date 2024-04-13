@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('CASCADE');
             $table->string('ticket_status')->default("Pending");
             $table->timestamp('actual_response')->nullable();
             $table->timestamp('actual_resolve')->nullable();
@@ -26,7 +25,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down(): void 
     {
         Schema::dropIfExists('tickets');
     }

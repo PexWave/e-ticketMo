@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('ticket_id')->constrained('tickets')->onDelete('CASCADE');
             $table->timestamp('extension_time')->nullable();
-            $table->string('approved_by');
-            $table->string('requested_by');
+            $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('CASCADE');
+            $table->timestamp('approved_date')->nullable()->useCurrent=true;
+            $table->foreignId('requested_by')->nullable()->constrained('it_employees')->onDelete('CASCADE');
             $table->timestamp('requested_date')->useCurrent=true;
             $table->string('reason');
         });
