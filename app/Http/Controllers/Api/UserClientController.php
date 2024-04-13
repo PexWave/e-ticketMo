@@ -5,8 +5,8 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserClientTypeRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 
 class UserClientController extends Controller
 {
@@ -70,6 +70,7 @@ class UserClientController extends Controller
        }
     }
 
+  
     public function destroy(string $clientId)
     {
         try{

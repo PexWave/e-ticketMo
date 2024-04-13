@@ -49,7 +49,8 @@ class TaskTypeController extends Controller
     */
    public function show(string $id)
    {
-       //
+        $tasktype = TaskType::findOrFail($id);
+        return $tasktype;
    }
 
    public function edit(string $id)

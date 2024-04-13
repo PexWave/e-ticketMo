@@ -55,7 +55,8 @@ class OfficeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $office = Office::findOrFail($id);
+        return $office;
     }
 
     /**

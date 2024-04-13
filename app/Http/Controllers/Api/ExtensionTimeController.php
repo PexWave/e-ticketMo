@@ -171,14 +171,12 @@ class ExtensionTimeController extends Controller
     //     }
     // }
 
-
-    //add condition if the fetched instance has a status of pending it will update the extension status and if the status is approved a message will show that the request is already approvesd
     public function updateExtensionRequestStatus($id){
         $approved_status = 'Approved';
 
         try{
             DB::beginTransaction();
-
+            //modify the code add approved_by
             $extension_request_instance = ExtensionRequest::findOrFail($id);
             if ($extension_request_instance->extension_status === $approved_status){
                 return response()->json([
@@ -186,6 +184,7 @@ class ExtensionTimeController extends Controller
                     "message" => "Extension status is already approved.",
                 ],200);
             }
+            
             $extension_request_instance->extension_status = $approved_status;
             $extension_request_instance->save();
             
@@ -204,6 +203,36 @@ class ExtensionTimeController extends Controller
                 "status" => "Failed",
                 "message" => $th->getMessage(),
                ], 500);     
+        }
+    }
+
+    //FUNCTIONALITY FOR RESOLVED TICKETS
+    public function resolvedTicket($id){
+        try {
+            $resolved_status = "Resolved";
+            DB::beginTransaction();
+
+            $currentTime = Carbon::now();
+
+            $ticket_instance = Ticket::findOrFail($id);
+            $ticket_instance->ticket_status =  $resolved_status;
+            $ticket_instance->actual_resolve = $currentTime;
+            $ticket_instance->save();
+            
+            DB::commit();
+
+            return response()->json([
+                "status" => "Success",
+                "message" => "The ticket was resolved!"
+               ], 200);
+            
+        } catch (\Throwable $th) {
+            DB::rollBack();
+        
+            return response()->json([
+                "status" => "Failed",
+                "message" => $th->getMessage(),
+               ], 500);   
         }
     }
 }
