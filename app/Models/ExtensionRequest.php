@@ -18,9 +18,11 @@ class ExtensionRequest extends Model
         'ticket_id',
         'extension_time',
         'approved_by',
+        'approved_date',
         'requested_by',
         'requested_date',
         'reason',
+        'extension_status',
     ] ;
 
     public function ticket(): BelongsTo

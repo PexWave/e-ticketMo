@@ -47,6 +47,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import useTickets from "@/Composables/Tickets";
+import useAssigningTickets from "@/Composables/AssignTickets";
 import Pusher from "pusher-js";
 
 export default {
@@ -54,6 +55,8 @@ export default {
 
     setup() {
         const { tickets, getTicketsForQueue } = useTickets();
+        const { assignTicket } = useAssigningTickets();
+
         const ticketStatusFilter = ref("All Items");
 
         onMounted(() => {
@@ -65,10 +68,29 @@ export default {
 
             const channel = pusher.subscribe("ticket-queue");
             channel.bind("ticket", (data) => {
+                
                 // When a new ticket is received, push it to the tickets array
+                if (!tickets.value.some(ticket => ticket.ticket_id === data['ticket_id'])) {
+                // Add the new ticket if it doesn't exist
                 tickets.value.push(data);
+                } else {
+                // Find the existing ticket and update its status
+                const existingTicketIndex = tickets.value.findIndex(ticket => ticket.ticket_id === data['ticket_id']);
+                console.log(existingTicketIndex);
+                if (existingTicketIndex !== -1) {
+                    // Ticket found, update its status
+                    tickets.value[existingTicketIndex].ticket_status = "In Progress";
+                } else {
+                    // Handle potential errors (e.g., unexpected ID mismatch)
+                    console.error("Unexpected error: Ticket ID mismatch");
+                }
+            }
                 // Sort the tickets immediately after pushing the new ticket
                 sortAndAssignTickets();
+
+                // assign ticket to available staff
+                assignTicket([...tickets.value, data]);
+                
             });
 
             // Initial call to load tickets
@@ -76,6 +98,7 @@ export default {
 
             // Reload tickets every minute
             // setInterval(reloadTickets, 60000);
+
         });
 
         // FUNCTIONS
@@ -86,7 +109,7 @@ export default {
                 sortAndAssignTickets();
             });
         };
-
+        
         const sortTickets = () => {
             const sortedTickets = [...tickets.value].sort((a, b) => {
                 const priorityA = Number(a.importance) + Number(a.urgency);
@@ -106,7 +129,8 @@ export default {
             });
 
             tickets.value = sortedTickets;
-            console.log(tickets.value);
+
+            return sortedTickets;
         };
 
         // const sortTickets = (categoryId) => {
@@ -140,9 +164,9 @@ export default {
 
         const sortAndAssignTickets = async () => {
             // Sort the tickets then assigning a ticket to available staff
-            sortTickets();
+            var sortedTickets = sortTickets();
 
-            // assign ticket to available staff
+   
         };
 
         const handleTicketStatusChange = () => {
