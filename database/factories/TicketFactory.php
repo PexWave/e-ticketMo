@@ -17,8 +17,6 @@ class TicketFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => fake()->randomElement([1, 2, 3]),
-            'task_type_id' => fake()->randomElement([1, 2, 3]),
         ];
     }
 }

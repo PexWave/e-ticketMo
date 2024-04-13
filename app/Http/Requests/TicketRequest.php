@@ -22,14 +22,15 @@ class TicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => "required",
-            'ticket_status' => "required",
-            'actual_response' => "required",
-            'actual_resolve' => "required",
-            'modified_date' => "required",
-            'reference_date' => "required",
-            'remarks' => "required",
-            'task_type_id' => "required",
+            'user_id' => "",
+            'client_type_id' => "",
+            'ticket_status' => "",
+            'actual_response' => "",
+            'actual_resolve' => "",
+            'modified_date' => "",
+            'reference_date' => "",
+            'remarks' => "",
+            'task_type_id' => "",
         ];
     }
 }
