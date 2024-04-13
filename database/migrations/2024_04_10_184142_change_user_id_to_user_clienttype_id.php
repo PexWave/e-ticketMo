@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('it_employees', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('CASCADE');
-            $table->tinyInteger('skill_level')->default(0);
-            $table->string('staff_status')->default("Available");
+        Schema::table('user_clienttype_id', function (Blueprint $table) {
+            //
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('it_employees');
+        Schema::table('user_clienttype_id', function (Blueprint $table) {
+            //
+        });
     }
 };

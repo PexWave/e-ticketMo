@@ -22,12 +22,14 @@ class ExtensionTimeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ticket_id' => "required",
-            'extension_time' => "required",
-            'approved_by' => "required",
-            'requested_by' => "required",
-            'requested_date' => "required",
-            'reason' => "required",
+            'ticket_id' => "",
+            'extension_time' => "",
+            'approved_by' => "",
+            'approved_data' => "",
+            'requested_by' => "",
+            'requested_date' => "",
+            'reason' => "",
+            'extension_status' => "Pending"
         ];
     }
 }
