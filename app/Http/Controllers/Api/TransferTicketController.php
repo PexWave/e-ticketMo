@@ -19,18 +19,25 @@ class TransferTicketController extends Controller
 
             $transferred_ticket_instance = Ticket::findOrFail($id);
             $assigned_to = $transferred_ticket_instance->assigned_to;
+            $ticket_number = $transferred_ticket_instance->ticket_number;
+            $modified_date = $transferred_ticket_instance->modified_date;
+            $reference_date = $transferred_ticket_instance->reference_date;
 
-            $transferred_ticket_instance->transferred_to = $transferred_to;
-            $transferred_ticket_instance->transferred_by = $assigned_to;
-            $transferred_ticket_instance->transfer_request_date = $currentTime;
-            $transferred_ticket_instance -> save();
+            $transfer_ticket = Ticket::create([
+                'assigned_to' => $assigned_to,
+                'ticket_number' => $ticket_number,
+                'modified_date' => $modified_date,
+                'reference_date' => $reference_date,
+                'transfer_ticket_date' => $$currentTime,
+            ]);
 
             DB::commit();
+
             return response()->json([
                 "status" => "Success",
                 "message" => "Request Transfer of ticket was successful!",
+                "data" => new TicketResource($transfer_ticket),
                ], 200);
-
         } catch (\Throwable $th) {
             DB::rollBack();
         

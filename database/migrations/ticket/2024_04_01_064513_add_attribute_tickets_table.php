@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('transferred_to')->nullable()->constrained('it_employees')->onDelete('CASCADE');
             $table->foreignId('transferred_by')->nullable()->constrained('it_employees')->onDelete('CASCADE');
             $table->foreignId('transfer_ticket_date')->nullable()->useCurrent = true;
-            $table->timestamp('new_resolve')->nullable();
         });
     }
 
