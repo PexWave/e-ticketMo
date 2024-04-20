@@ -16,14 +16,16 @@ class ExtentensionRequestSeeder extends Seeder
         $extension_requests = [
             [
                 "ticket_id"=> 1,
-                "extension_time"=> 3600,
+                "request_extension_resolve_time"=> 1.5,
+                "request_extension_response_time" => 1,
                 
                 "requested_by"=> 1,
                 "reason"=>"need more time",
             ],
             [
                 "ticket_id"=> 2,
-                "extension_time"=> 3600,
+                "request_extension_resolve_time"=> 1,
+                "request_extension_response_time" => 1,
                 
                 "requested_by"=> 2,
                 "reason"=>"encountered more error",
