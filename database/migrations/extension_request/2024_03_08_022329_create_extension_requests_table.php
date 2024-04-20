@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('extension_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ticket_id')->constrained('tickets')->onDelete('CASCADE');
-            $table->timestamp('extension_time')->nullable();
+            $table->double('request_extension_response_time')->nullable();
+            $table->double('request_extension_resolve_time')->nullable();
             $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('CASCADE');
             $table->timestamp('approved_date')->nullable()->useCurrent=true;
             $table->foreignId('requested_by')->nullable()->constrained('it_employees')->onDelete('CASCADE');
             $table->timestamp('requested_date')->useCurrent=true;
-            $table->string('reason');
+            $table->string('reason')->nullable();
         });
     }
 

@@ -8,10 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AssigningTicketRequest;
 use Illuminate\Support\Facades\Facade;
 use App\Models\ITEmployee;
+
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Throw_;
+
 
 use function PHPSTORM_META\map;
 
@@ -23,6 +25,7 @@ class AssigningTicketController extends Controller
         try {
         $filtered_by_category = array_pluck($filters, 'category_id');
         $filtered_by_difficulty = array_pluck($filters, 'difficulty');
+
         
         return DB::table('it_employees')
         ->where('staff_status', 'Available')
@@ -43,6 +46,7 @@ class AssigningTicketController extends Controller
     //FUNCTION FOR ASSIGNING EMPLOYEE TO A TICKET
     public function assignTicketToEmployee(Request $request)
     {   
+
 
         $jsonData = $request->json()->all();
 

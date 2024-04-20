@@ -12,10 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tickets', function(Blueprint $table){
+            $table->string('ticket_number')->nullable();
             $table->foreignId('assigned_to')->nullable()->constrained('it_employees')->onDelete('CASCADE');
+            $table->timestamp('assigned_date')->nullable();
             $table->foreignId('transferred_to')->nullable()->constrained('it_employees')->onDelete('CASCADE');
             $table->foreignId('transferred_by')->nullable()->constrained('it_employees')->onDelete('CASCADE');
-            $table->timestamp('new_resolve')->nullable();
+            $table->foreignId('transfer_ticket_date')->nullable()->useCurrent = true;
         });
     }
 

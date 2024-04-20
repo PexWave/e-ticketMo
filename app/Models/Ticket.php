@@ -29,6 +29,8 @@ class Ticket extends Model
         'transferred_to',
         'transferred_by',
         'new_resolve',
+        'transfer_ticket_date',
+        'ticket_number',
     ];
 
     public function extension_requests(): HasMany

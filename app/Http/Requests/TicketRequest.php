@@ -31,6 +31,13 @@ class TicketRequest extends FormRequest
             'reference_date' => "",
             'remarks' => "",
             'task_type_id' => "",
+            'assigned_to' => "",
+            'transferred_to' => "",
+            'transferred_by' => "",
+            'new_resolve' => "",
+            'transfer_ticket_date' => "",
+            'ticket_number'=> "",
+
         ];
     }
 }

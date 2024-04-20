@@ -68,6 +68,7 @@ export default {
 
             const channel = pusher.subscribe("ticket-queue");
             channel.bind("ticket", (data) => {
+
                 
                 // When a new ticket is received, push it to the tickets array
                 if (!tickets.value.some(ticket => ticket.ticket_id === data['ticket_id'])) {
@@ -129,6 +130,7 @@ export default {
             });
 
             tickets.value = sortedTickets;
+            console.log(tickets.value);
 
             return sortedTickets;
         };
@@ -164,10 +166,10 @@ export default {
 
         const sortAndAssignTickets = async () => {
             // Sort the tickets then assigning a ticket to available staff
+
             var sortedTickets = sortTickets();
 
-   
-        };
+           };
 
         const handleTicketStatusChange = () => {
             reloadTickets(ticketStatusFilter.value);
