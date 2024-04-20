@@ -16,7 +16,8 @@ class ExtensionRequest extends Model
 
     protected $fillable = [
         'ticket_id',
-        'extension_time',
+        'request_extension_resolve_time',
+        'request_extension_response_time',
         'approved_by',
         'approved_date',
         'requested_by',
