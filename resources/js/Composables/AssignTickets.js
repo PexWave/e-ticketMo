@@ -6,6 +6,7 @@ export default function useAssigningTickets() {
 
     const assignTicket = async (data) => {
         errors.value = "";
+
         console.log(data);
         try {
             var response = await axios.post("/api/assign-ticket", data, {
@@ -21,6 +22,7 @@ export default function useAssigningTickets() {
             if (e.response.status === 422) {
                 errors.value = e.response.data.errors;
             }
+
             console.log(e.response.data.message);
         }
     };

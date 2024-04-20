@@ -12,6 +12,8 @@ use App\Http\Controllers\Api\TaskTypeController;
 use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\Api\AssigningTicketController;
 use App\Http\Controllers\Api\UserClientController;
+use App\Http\Controllers\Api\TransferTicketController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -130,5 +132,13 @@ Route::controller(ExtensionTimeController::class)->group(function(){
     Route::get('/get-extension-time/{id}', 'show');
     Route::delete('/delete-extension-time/{id}', 'destroy');
     Route::post('/request-extension/{ticketID}', 'requestExtension');
-}); 
+    Route::get('/getPending-request-extension', 'getPendingExtensionRequest');
+    Route::put('/update-extension-request-status/{id}', 'updateExtensionRequestStatus');
+    Route::put('/resolve_ticket/{id}', 'resolvedTicket');
+});
+
+//ROUTES FOR TRANSFER OF TICKETS
+Route::controller(TransferTicketController::class)->group(function(){
+    Route::put('/update-transfer-request-ticket-status/{id}', 'modifytransferTicket');
+});
 

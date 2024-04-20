@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string('ticket_status')->default("Pending");
+            $table->timestamp('new_sla_response_time')->nullable();
+            $table->timestamp('new_sla_resolve_time')->nullable();
             $table->timestamp('actual_response')->nullable();
             $table->timestamp('actual_resolve')->nullable();
             $table->timestamp('modified_date')->useCurrent = true;

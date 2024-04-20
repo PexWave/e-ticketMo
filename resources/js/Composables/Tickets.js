@@ -26,6 +26,7 @@ export default function useTickets() {
     const storeTicket = async (data) => {
         errors.value = "";
         try {
+
             console.log(data);
             await axios.post("/api/add-ticket", data);
             // await router.push({ name: "auth.queue" });
@@ -33,6 +34,7 @@ export default function useTickets() {
             if (e.response.status === 422) {
                 errors.value = e.response.data.errors;
             }
+
             console.log(e.response.message)
         }
     };
