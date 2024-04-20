@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('it_employees', function (Blueprint $table) {
-            $table->mediumInteger('resolved_tickets')->default(0);
+        Schema::table('tickets', function(Blueprint $table){
+            $table->foreignId('user_client_type_id')->constrained('user_client_types')->onDelete('CASCADE');
+
         });
     }
 
@@ -21,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('it_employees', function (Blueprint $table) {
-            //
-        });
+
     }
 };

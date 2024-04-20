@@ -6,9 +6,14 @@ export default function useAssigningTickets() {
 
     const assignTicket = async (data) => {
         errors.value = "";
-        console.log(data.value[0]);
+
+        console.log(data);
         try {
-            var response = await axios.post("/api/assign-ticket", data.value);
+            var response = await axios.post("/api/assign-ticket", data, {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              });
 
          
                 console.log(response);
@@ -17,7 +22,8 @@ export default function useAssigningTickets() {
             if (e.response.status === 422) {
                 errors.value = e.response.data.errors;
             }
-            console.log(e.response);
+
+            console.log(e.response.data.message);
         }
     };
 

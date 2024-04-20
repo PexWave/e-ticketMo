@@ -22,10 +22,7 @@ class UserClientTypeSeeder extends Seeder
                 "user_id"=> 1,
                 "client_type_id"=>2
             ],
-            [
-                "user_id"=> 1,
-                "client_type_id"=>2
-            ],
+
         ];
 
         foreach($user_client_types as $user_client_type){

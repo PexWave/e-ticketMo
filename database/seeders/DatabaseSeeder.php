@@ -18,11 +18,13 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategorySeeder::class,
             ClientTypeSeeder::class,
+            UserClientTypeSeeder::class,
             RoleSeeder::class,
             TaskTypeSeeder::class,
             ITEmployeeSeeder::class,
             TicketSeeder::class,
             ExtentensionRequestSeeder::class,
+
         ]);
     }
 }

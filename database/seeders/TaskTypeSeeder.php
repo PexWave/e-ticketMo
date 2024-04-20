@@ -17,14 +17,14 @@ class TaskTypeSeeder extends Seeder
             [
                 "task" => "Monitor repair",
                 "category_id" => 2,
-                "difficulty" => 2,
+                "difficulty" => 4,
                 "urgency" => 2,
                 "response_time" => 3600,
                 "resolve_time" => 1800
             ],
             [
                 "task" => "OS Installation",
-                "category_id" => 2,
+                "category_id" => 1,
                 "difficulty" => 2,
                 "urgency" => 3,
                 "response_time" => 3600,

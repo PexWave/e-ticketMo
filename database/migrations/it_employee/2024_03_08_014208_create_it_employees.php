@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('it_employees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('CASCADE');
+            $table->tinyInteger('skill_level')->default(0);
             $table->string('staff_status')->default("Available");
         });
     }

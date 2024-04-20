@@ -37,6 +37,7 @@ class TicketRequest extends FormRequest
             'new_resolve' => "",
             'transfer_ticket_date' => "",
             'ticket_number'=> "",
+
         ];
     }
 }

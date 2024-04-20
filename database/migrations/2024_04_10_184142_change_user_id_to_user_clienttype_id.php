@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('it_employees', function (Blueprint $table) {
-            $table->mediumInteger('resolved_tickets')->default(0);
+        Schema::table('user_clienttype_id', function (Blueprint $table) {
+            //
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('it_employees', function (Blueprint $table) {
+        Schema::table('user_clienttype_id', function (Blueprint $table) {
             //
         });
     }

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('CASCADE');
             $table->string('ticket_status')->default("Pending");
             $table->timestamp('new_sla_response_time')->nullable();
             $table->timestamp('new_sla_resolve_time')->nullable();

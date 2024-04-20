@@ -17,7 +17,7 @@ class Ticket extends Model
 
     
     protected $fillable = [
-        'user_id',
+        'user_client_type_id',
         'ticket_status',
         'actual_response',
         'actual_resolve',
@@ -41,11 +41,18 @@ class Ticket extends Model
 
     public function task_type(): BelongsTo
     {
-        return $this->belongsTo(TaskType::class);
+        return $this->belongsTo(TaskType::class, 'task_type_id');
     }
     
-    // public function user(): BelongsTo
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
+    public function it_employee(): BelongsTo
+    {
+        return $this->belongsTo(ITEmployee::class, 'assigned_to');
+    }
+    
+    public function client_type(): BelongsTo
+    {
+        return $this->belongsTo(UserClientType::class, 'user_client_type_id');
+    }
+    
+
 }
