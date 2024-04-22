@@ -94,6 +94,7 @@ Route::controller(UserController::class)->group(function() {
 Route::apiResource('/client', UserClientController::class);
 Route::controller(UserClientController::class)->group(function() {
     Route::post('/client','store');
+    Route::get('/client-types/{id}','show');
     Route::put('/client/{id}','update');
     Route::delete('/client/{id}', 'destroy');
 });

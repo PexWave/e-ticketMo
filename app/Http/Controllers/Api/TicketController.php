@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Events\LockDatabase;
 use App\Events\TicketQueue;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TicketRequest;
@@ -28,44 +29,7 @@ class TicketController extends Controller
     }
 
 
-
-        /**
-     * checks if the user_id and client_type_id already exist in user_client_type table
-     */
-    public function checkIfUserClientTypeExists(string $userId, string $clientTypeId)
-    {
-        $userClientType = UserClientType::where('user_id', $userId)
-                                        ->where('client_type_id', $clientTypeId)
-                                        ->first();
-    
-        if ($userClientType) {
-            return $userClientType->id;
-        }
-    
-        try{
-            DB::beginTransaction();
-
-            $data = UserClientType::create([
-                'user_id' => $userId,
-                'client_type_id' => $clientTypeId,
-            ]);
-
-            DB::commit();
-
-            return new UserClientTypeResource($data);
-
-         }catch(\Throwable $th){
-            DB::rollBack();
-
-            return response()
-            ->json([
-                "message" => $th->getMessage()
-            ], 500);
-         }
-    }
-
-
-    
+    // for Queue
     private function extractClientType(string $taskTypeId)
     {
         $clientType = ClientType::find($taskTypeId);
@@ -110,7 +74,7 @@ class TicketController extends Controller
             // Get the task type ID from the ticket table
             $taskTypeId = $ticket->task_type_id;
 
-            $userClientTypeId = $ticket->user_client_type_id; // to be changed to userclienttypeid oakay
+            $userClientTypeId = $ticket->user_client_type_id; 
     
             // Find the corresponding task type in the tasktype table
             $userClientType = $this->extractUserClientType($userClientTypeId);
@@ -152,31 +116,55 @@ class TicketController extends Controller
     }
     
 
-    
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+    // for creating a ticket
+    public function getUserClientTypeId(string $userId, string $clientTypeId)
     {
-        //
+        $userClientType = UserClientType::where('user_id', $userId)
+                                        ->where('client_type_id', $clientTypeId)
+                                        ->first();
+    
+        if ($userClientType) {
+            return $userClientType->id;
+        }
+        
+        return 0;
+    }
+
+    public function generateTicketNumber(string $category)
+    {
+        // set the value for database lock as true so that other users won't be able to access the database for a while
+        event(new LockDatabase(true));
+
+        $lastTicket = Ticket::orderBy('id', 'desc')->first();
+        $lastTicketId = $lastTicket->id;
+
+        $ticket = $category[0] . date("mdY") . "000" . ($lastTicketId + 1);
+        return $ticket;
+
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(TicketRequest $request)
     {
+        
         $ticket = $request->validated();
+        
+        // generate ticket number
+        $ticket['ticket_number'] = $this->generateTicketNumber("Software");
 
-        $userClientTypeId = $this->checkIfUserClientTypeExists($ticket['user_id'], $ticket['client_type_id']);
-
+        // get user client type id
+        $userClientTypeId = $this->getUserClientTypeId($ticket['user_id'], $ticket['client_type_id']);
+        
+        
+        // store client type id then remove it from the object
         $clientTypeId = $ticket['client_type_id'];
         unset($ticket['client_type_id']);
-
-
-        $ticket['user_client_type_id'] = $userClientTypeId; //to be changed into user_client_type_id
+        unset($ticket['user_id']);
+        
+        // store user client type id
+        $ticket['user_client_type_id'] = $userClientTypeId; 
 
         // save the data to the ticket table
         try {
@@ -186,6 +174,7 @@ class TicketController extends Controller
 
             DB::commit();
 
+            event(new LockDatabase(false));
         } catch (\Throwable $th) {
             DB::rollBack();
             return response()->json([
@@ -204,17 +193,8 @@ class TicketController extends Controller
         // event for realtime updating in the queue
         event(new TicketQueue($createdTicketData['id'],$userClientTypeId, $ticket['task_type_id'], $ticket['ticket_status'], $ticket['reference_date'],$taskType->task, $taskType->category_id, $taskType->difficulty,$taskType->urgency, $clientType->importance,$clientType->name));
 
-        $createdTicketData = new TicketResource($ticketData);
-        
-        // getting the importance from client type table for queueing
-        $clientType = $this->extractClientType($clientTypeId);
-        $taskType = $this->extractTaskType($ticket['task_type_id']);
 
-        // event for realtime updating in the queue
-        event(new TicketQueue($createdTicketData['ticket_id'],$userClientTypeId, $ticket['task_type_id'], $ticket['ticket_status'], $ticket['reference_date'],$taskType->task, $taskType->category_id, $taskType->difficulty,$taskType->urgency, $clientType->importance,$clientType->name));
-
-
-        return [];
+        return $ticket;
     }
 
     /**
@@ -265,14 +245,6 @@ class TicketController extends Controller
     public function destroy(string $id)
     {
         try {
-            // $ticket = Ticket::findOrFail($id);
-            // $ticket->delete();
-            // return response()->json([
-            //     "status" => "Success",
-            //     "message" => "Ticket deleted successfully!",
-            //     "data" => new TicketResource($ticket),
-            //    ], 200);
-
 
             $task_type_instance = Ticket::findOrFail($id);
     

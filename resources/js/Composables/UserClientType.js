@@ -8,9 +8,9 @@ export default function useUserClientTypes() {
     const router = useRouter();
     const errors = ref("");
 
-    const getUserClientTypes = async () => {
-        let response = await axios.get("/api/userClientType");
-        userClientTypes.value = response.data.data;
+    const getUserClientTypes = async (id) => {
+        let response = await axios.get(`/api/client-types/${id}`);
+        userClientTypes.value = response.data;
     };
 
     const getUserClientType = async (id) => {

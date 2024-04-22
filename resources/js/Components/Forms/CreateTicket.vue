@@ -30,12 +30,12 @@
                     placeholder="Select a Client"
                 >
                     <option
-                        v-for="client in clientTypes"
-                        :key="client.id"
-                        :value="client.id"
+                        v-for="client in userClientTypes"
+                        :key="client.client_id"
+                        :value="client.client_id"
                         class="py-2"
                     >
-                        {{ client.name }}
+                        {{ client.client_type }}
                     </option>
                 </select>
 
@@ -112,46 +112,85 @@ import useUsers from "@/Composables/Users";
 import useTickets from "@/Composables/Tickets";
 
 import { ref, reactive, onMounted } from "vue";
+import Pusher from "pusher-js";
 
 export default {
     setup() {
         const { storeTicket } = useTickets();
         const { user, getUser } = useUsers();
-        const { userClientType } = useUserClientTypes();
+        const { userClientTypes } =
+            useUserClientTypes();
         const { office, getOffice } = useOffice();
         const { taskTypes, getTaskTypes } = useTaskTypes();
-        const { clientTypes, getClientTypes } = useClientTypes();
+        const { clientTypes } = useClientTypes();
 
         const officeId = ref(null);
         const selectedClientTypeId = ref(null);
         const selectedTaskTypeId = ref(null);
         const remarksInput = ref(null);
+        const isDatabaseLocked = ref(false);
 
-        const userId = 1;
+        const userId = 2;
+
+        onMounted(() => {
+            Pusher.logToConsole = true;
+
+            const pusher = new Pusher("3026c4d8bbdb03f57b3c", {
+                cluster: "ap1",
+            });
+
+            const channel = pusher.subscribe("ticket-lock");
+            channel.bind("database", (data) => {
+                console.log("database: " + data["is_ticket_locked"]);
+                isDatabaseLocked.value = data["is_ticket_locked"];
+            });
+        });
 
         onMounted(async () => {
             try {
-                await getUser(userId).then(async () => {
-                    getOffice(user.value.office_id);
-                    officeId.value = user.value.office_id;
-                    await getClientTypes(officeId.value).then(() => {
-                        console.log(clientTypes);
-                    });
-                    await getTaskTypes();
-                });
+                const getUserClientTypes = async (id) => {
+                    try {
+                        let response = await axios.get(
+                            `/api/client-types/${id}`
+                        );
+                        return response.data;
+                    } catch (error) {
+                        console.error(error);
+                        throw error;
+                    }
+                };
+
+                // Call the function with async/await
+                (async () => {
+                    try {
+                        let result = await getUserClientTypes(userId);
+                        userClientTypes.value = result;
+
+                        await getUser(userId).then(async () => {
+                            getOffice(user.value.office_id);
+                            officeId.value = user.value.office_id;
+                            await getTaskTypes();
+                        });
+                        await getTaskTypes();
+                    } catch (error) {
+                        console.error(error);
+                    }
+                })();
             } catch (error) {
                 console.error("Failed to fetch offices:", error);
             }
         });
 
         const createTicket = async () => {
+            while (isDatabaseLocked.value) {
+                await sleep(100); // Sleep for 100 milliseconds
+            }
+
             let ticketData = {
-                user_id: userId, // to be changed later to userClientType.value
+                user_id: userId,
                 client_type_id: selectedClientTypeId.value,
                 task_type_id: selectedTaskTypeId.value,
                 ticket_status: "Pending",
-                actual_response: null,
-                actual_resolve: null,
                 remarks: remarksInput.value,
                 modified_date: new Date().toISOString().slice(0, 16),
                 reference_date: new Date().toISOString().slice(0, 16),
@@ -166,6 +205,7 @@ export default {
         return {
             office,
             clientTypes,
+            userClientTypes,
             taskTypes,
             officeId,
             selectedClientTypeId,
