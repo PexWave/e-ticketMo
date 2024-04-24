@@ -90,6 +90,7 @@ class TicketController extends Controller
     
                 // Populate the object with data
                 $obj->ticket_id = $ticket->id;
+                $obj->ticket_number = $ticket->ticket_number;
                 $obj->task_type_id = $ticket->task_type_id;
 
                 $obj->user_client_type_id = $ticket->user_client_type_id;
@@ -145,7 +146,7 @@ class TicketController extends Controller
 
     }
 
-
+    // for adding a ticket
     public function store(TicketRequest $request)
     {
         
@@ -206,17 +207,8 @@ class TicketController extends Controller
         return $ticket;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+  
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(TicketRequest $request, string $id)
     {
         try {
