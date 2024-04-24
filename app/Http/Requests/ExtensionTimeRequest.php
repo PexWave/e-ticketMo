@@ -23,7 +23,8 @@ class ExtensionTimeRequest extends FormRequest
     {
         return [
             'ticket_id' => "",
-            'extension_time' => "",
+            'request_extension_resolve_time' => "",
+            'request_extension_response_time' => "",
             'approved_by' => "",
             'approved_data' => "",
             'requested_by' => "",

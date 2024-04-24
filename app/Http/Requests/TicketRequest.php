@@ -24,13 +24,11 @@ class TicketRequest extends FormRequest
         return [
             'user_id' => "",
             'client_type_id' => "",
-            'ticket_status' => "",
-            'actual_response' => "",
-            'actual_resolve' => "",
-            'modified_date' => "",
-            'reference_date' => "",
-            'remarks' => "",
             'task_type_id' => "",
+            'ticket_status' => "",
+            'remarks' => "",
+            'modified_date' => "",
+            'reference_date' => ""
         ];
     }
 }
