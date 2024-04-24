@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-const SupervisorDashboard = () =>
-    import("@/Components/Supervisor/SupervisorDashboard.vue");
+const SupervisorDashboard = () => import("@/Components/Supervisor/SupervisorDashboard.vue");
 const ClientHomepage = () => import("@/Components/Client/ClientHomepage.vue");
 const CreateTicket = () => import("@/Components/Forms/CreateTicket.vue");
 const CreateTask = () => import("@/Components/Forms/CreateTask.vue");
