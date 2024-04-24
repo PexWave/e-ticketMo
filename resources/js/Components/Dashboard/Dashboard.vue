@@ -181,7 +181,7 @@
                                         style="
                                             padding-left: 1.2rem;
                                             padding-right: 1.2rem;
-                                            padding-left: 1.5rem;
+                                            padding-top: 2rem;
                                         "
                                     >
                                         Client Type
