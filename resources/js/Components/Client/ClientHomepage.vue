@@ -81,24 +81,29 @@
                 </v-col>
             </v-row>
 
-            <v-row class="queue-row"> table here </v-row>
+            <v-row class="queue-row">
+                <TicketQueues/>
+            </v-row>
 
             <v-row>
                 <Footer />
             </v-row>
         </v-col>
         <!-- end -->>
+
     </v-layout>
 </template>
 
 <script>
 import Footer from "@/Components/Layout/Footer.vue";
 import Sidebar from "@/Components/Client/ClientSidebar.vue";
+import TicketQueues from "@/Components/Client/Components/TicketQueues.vue";
 
 export default {
     components: {
         Footer,
         Sidebar,
+        TicketQueues,
     },
 };
 </script>
