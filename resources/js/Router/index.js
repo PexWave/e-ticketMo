@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-const SupervisorDashboard = () => import("@/Components/Supervisor/SupervisorDashboard.vue");
+const Dashboard = () => import("@/Components/Dashboard/Dashboard.vue");
 const ClientHomepage = () => import("@/Components/Client/ClientHomepage.vue");
 const CreateTicket = () => import("@/Components/Forms/CreateTicket.vue");
 const CreateTask = () => import("@/Components/Forms/CreateTask.vue");
@@ -41,17 +41,24 @@ const routes = [
         ],
     },
     {
-        path: "/supervisor",
+        path: "/everyone",
         component: {
             template: "<router-view/>",
         },
         children: [
             {
-                path: "/supervisor-dashboard",
-                name: "auth.supervisor-dashboard",
-                component: SupervisorDashboard,
+                path: "/dashboard",
+                name: "auth.homeDashboard",
+                component: Dashboard,
             },
-
+        ],
+    },
+    {
+        path: "/supervisor",
+        component: {
+            template: "<router-view/>",
+        },
+        children: [
             {
                 path: "/createTask",
                 name: "auth.createTask",

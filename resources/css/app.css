@@ -5,6 +5,30 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+::-webkit-scrollbar {
+    width: 12px; /* Width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #263d8f; /* Color of the scroll thumb */
+    border-radius: 2px; /* Roundness of the scroll thumb */
+}
+
+body {
+    scrollbar-width: thin;
+    scrollbar-face-color: #263d8f;
+    scrollbar-color: #f1f1f1;
+}
+
+body {
+    scrollbar-face-color: #263d8f;
+    scrollbar-highlight-color: #f1f1f1;
+}
+
 .logo {
     background-color: #263d8f;
 }
