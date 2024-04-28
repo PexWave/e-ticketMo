@@ -27,7 +27,7 @@ export default function useTickets() {
         errors.value = "";
         try {
             await axios.post("/api/add-ticket", data);
-            await router.push({ name: "auth.queue" });
+            await router.push({ name: "auth.homeDashboard" });
         } catch (e) {
             if (e.response.status === 422) {
                 errors.value = e.response.data.errors;

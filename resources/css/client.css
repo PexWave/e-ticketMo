@@ -1,0 +1,12 @@
+.transfer-ticket-container .v-card{
+    width: 90vw !important;
+    height: 90vh !important;
+    margin: auto;
+}
+
+.close-btn{
+    width: min-content;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

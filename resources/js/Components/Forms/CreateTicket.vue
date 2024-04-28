@@ -118,8 +118,7 @@ export default {
     setup() {
         const { storeTicket } = useTickets();
         const { user, getUser } = useUsers();
-        const { userClientTypes } =
-            useUserClientTypes();
+        const { userClientTypes } = useUserClientTypes();
         const { office, getOffice } = useOffice();
         const { taskTypes, getTaskTypes } = useTaskTypes();
         const { clientTypes } = useClientTypes();
@@ -130,7 +129,7 @@ export default {
         const remarksInput = ref(null);
         const isDatabaseLocked = ref(false);
 
-        const userId = 2;
+        const userId = 1;
 
         onMounted(() => {
             Pusher.logToConsole = true;

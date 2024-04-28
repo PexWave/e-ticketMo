@@ -82,9 +82,7 @@
             </v-row>
 
             <v-row class="queue-row">
-
                 <TicketQueues/>
-
             </v-row>
 
             <v-row>
