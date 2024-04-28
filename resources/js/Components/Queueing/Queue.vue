@@ -15,14 +15,23 @@
                     <option key="2" value="Pending" class="py-2">
                         Pending
                     </option>
-                    <option key="3" value="In Progress" class="py-2">
-                        In Progress
+                    <option key="3" value="Assigned" class="py-2">
+                        Assigned
                     </option>
                     <option key="4" value="Resolved" class="py-2">
                         Resolved
                     </option>
                     <option key="5" value="Unresolved" class="py-2">
                         Unresolved
+                    </option>
+                    <option key="5" value="Unresolved" class="py-2">
+                        Unresolved
+                    </option>
+                    <option key="5" value="Transfered" class="py-2">
+                        Transfered
+                    </option>
+                    <option key="5" value="Responded" class="py-2">
+                        Responded
                     </option>
                 </select>
             </v-col>
@@ -187,7 +196,6 @@
                                         <button v-bind="activatorProps">
                                             <v-icon
                                                 size="20px"
-                                                style="padding-left: 1.5rem"
                                                 class="drawer-icon primary-color"
                                                 >fas fa-eye</v-icon
                                             >
@@ -195,24 +203,28 @@
                                     </template>
 
                                     <template v-slot:default="{ isActive }">
-                                        <v-card title="Dialog">
-                                            <v-card-text>
-                                                Lorem ipsum dolor sit amet,
-                                                consectetur adipiscing elit, sed
-                                                do eiusmod tempor incididunt ut
-                                                labore et dolore magna aliqua.
-                                            </v-card-text>
-
-                                            <v-card-actions>
-                                                <v-spacer></v-spacer>
-
-                                                <v-btn
-                                                    text="Close Dialog"
-                                                    @click="
-                                                        isActive.value = false
-                                                    "
-                                                ></v-btn>
-                                            </v-card-actions>
+                                        <v-card-actions>
+                                            <v-spacer
+                                                @click="isActive.value = false"
+                                            ></v-spacer>
+                                        </v-card-actions>
+                                        <v-card
+                                            title="Ticket Details"
+                                            class="mb-5"
+                                        >
+                                            <label
+                                                for="ticketnum"
+                                                class="px-3 py-2 text-normal font-medium mx-3 mt-5"
+                                                >Ticket Number</label
+                                            >
+                                            <input
+                                                id="ticketnum"
+                                                type="text"
+                                                class="px-3 py-2 text-normal mx-6 mb-5 form-control rounded outline-none"
+                                                readonly
+                                                style="border: 1px solid #999"
+                                                :value="ticket.ticket_number"
+                                            />
                                         </v-card>
                                     </template>
                                 </v-dialog>
@@ -267,14 +279,15 @@ export default {
                     if (existingTicketIndex !== -1) {
                         // Ticket found, update its status
                         tickets.value[existingTicketIndex].ticket_status =
-                            "In Progress";
+                            "Assigned";
                     } else {
                         // Handle potential errors (e.g., unexpected ID mismatch)
                         console.error("Unexpected error: Ticket ID mismatch");
                     }
                 }
                 // Sort the tickets immediately after pushing the new ticket
-                sortAndAssignTickets();
+                sortAndAssignTickets(categoryId);
+                reloadTickets(ticketStatusFilter.value, categoryId.value);
 
                 // assign ticket to available staff
                 assignTicket([...tickets.value, data]);
