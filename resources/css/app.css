@@ -1,0 +1,234 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap");
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+::-webkit-scrollbar {
+    width: 12px; /* Width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #263d8f; /* Color of the scroll thumb */
+    border-radius: 2px; /* Roundness of the scroll thumb */
+}
+
+body {
+    scrollbar-width: thin;
+    scrollbar-face-color: #263d8f;
+    scrollbar-color: #f1f1f1;
+}
+
+body {
+    scrollbar-face-color: #263d8f;
+    scrollbar-highlight-color: #f1f1f1;
+}
+
+.logo {
+    background-color: #263d8f;
+}
+
+.sign-in {
+    background-color: #f4f5ff;
+    width: 100%;
+    font-family: "Inter", sans-serif;
+}
+
+.sign-in,
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-family: "Unbounded", sans-serif;
+    font-size: 48px;
+    color: #263d8f;
+}
+
+.footer {
+    justify-items: right;
+    background-color: transparent;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 9999;
+}
+
+.footer-content {
+    position: absolute;
+    font-size: 14px;
+    color: #263d8f;
+    line-height: 20px;
+    margin-left: 70%;
+    margin-right: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.v-text-field {
+    border-radius: 20%;
+}
+
+#v-btn {
+    font-family: "Inter", sans-serif !important;
+    background-color: #f4f5ff;
+    color: #263d8f;
+}
+
+#v-btn-prio {
+    font-family: "Inter", sans-serif !important;
+    background-color: #263d8f;
+    color: #f4f5ff;
+}
+
+.sidebar {
+    background-color: #263d8f !important;
+    font-family: "Inter", sans-serif !important;
+    color: #f4f5ff !important;
+}
+
+.text-icon {
+    display: flex;
+    padding: 15px, 5px, 0px;
+}
+
+.text-icon :hover {
+    display: flex;
+    padding: 15px, 5px, 0px;
+    background-color: #f4f5ff !important;
+    color: #263d8f !important;
+    border-radius: 20% !important;
+}
+
+.drawer-icon {
+    margin-right: 15px;
+}
+
+.drawer-logo {
+    width: 100%;
+    padding: 5px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.total-tickets {
+    background-color: #263d8f;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(77, 77, 77, 0.5) !important;
+}
+
+.total-tickets h2 {
+    color: #f4f5ff !important;
+    font-family: "Unbounded", sans-serif;
+    font-size: 30px;
+}
+
+.total-tickets h1 {
+    color: #f4f5ff !important;
+    font-size: 80px;
+}
+
+.ticket-count {
+    background-color: #263d8f !important;
+    border-radius: 10px !important;
+    text-align: center;
+    font-family: "Unbounded", sans-serif;
+    font-size: 30px;
+    color: #f4f5ff !important;
+    box-shadow: 0 0 10px rgba(77, 77, 77, 0.5) !important;
+}
+
+.ticket-count h1 {
+    color: #f4f5ff !important;
+    font-size: 50px;
+}
+
+.ticket-count h2 {
+    color: #f4f5ff !important;
+    font-size: 18px;
+}
+
+.row3 {
+    text-align: center;
+    font-family: "Inter", sans-serif;
+    color: #263d8f;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.office-count,
+.user-count {
+    background-color: #f4f5ff !important;
+    border-radius: 10px !important;
+    text-align: center;
+    font-family: "Unbounded", sans-serif;
+    font-size: 30px;
+    color: #263d8f !important;
+    box-shadow: 0 0 10px rgba(77, 77, 77, 0.5) !important;
+}
+
+.user-count h1 {
+    color: #263d8f !important;
+    font-size: 50px;
+}
+
+.user-count h2 {
+    color: #263d8f !important;
+    font-size: 20px;
+}
+
+.office-count h2 {
+    color: #263d8f !important;
+    font-size: 20px;
+}
+
+.office-count h1 {
+    color: #263d8f !important;
+    font-size: 50px;
+}
+
+.remarks-field {
+    height: 150px;
+    padding: 10px 0px 0px;
+}
+
+h5 {
+    font-family: "Inter", sans-serif;
+    color: #263d8f;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#text-field {
+    border-radius: 10% !important;
+    border-color: #263d8f !important;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #f4f5ff;
+}
+
+#action-icon {
+    padding: 15px;
+    color: #263d8f;
+}
+
+.office-table {
+    font-family: "Inter", sans-serif;
+    color: #263d8f !important;
+}
+
+.input-box {
+    width: 100%;
+    outline: none;
+}

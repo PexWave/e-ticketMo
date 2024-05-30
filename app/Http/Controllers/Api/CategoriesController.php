@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoriesRequest;
 use App\Http\Resources\CategoriesResource;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +19,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        return CategoriesResource::collection(Category::all());
     }
 
     /**
@@ -31,10 +33,10 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoriesRequest $request)
     {
 
-        $category = $request->all();
+        $category = $request->validated();
 
 
         try {
@@ -48,11 +50,13 @@ class CategoriesController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollBack();
-            return response()->json(['message' => 'Failed to add a category'], 500);
-        }
+            return response()->json([
+                "status" => "Failed",
+                "message" => $th->getMessage(),
+               ], 500);        
+            }
 
         return new CategoriesResource($categoryData);
-
     }
 
     /**
@@ -60,7 +64,8 @@ class CategoriesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return $category;
     }
 
     /**
@@ -74,9 +79,28 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+
+
+    public function update(CategoriesRequest $request, string $id)
     {
-        //
+        try {
+            $category = Category::findOrFail($id);
+            $category->update($request->validated());
+            return response()->json([
+                "status" => "Success",
+                "message" => "Category updated successfully!",
+                "data" => new CategoriesResource($category),
+               ], 200);
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                "status" => "Failed",
+                "message" => $th->getMessage(),
+               ], 500);    
+
+            }
     }
 
     /**
@@ -84,6 +108,21 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $category = Category::findOrFail($id);
+            $category->delete();
+            return response()->json([
+                "status" => "Success",
+                "message" => "Category deleted successfully!",
+                "data" => new CategoriesResource($category),
+               ], 200);
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                "status" => "Failed",
+                "message" => $th->getMessage(),
+               ], 500);        
+            }
     }
 }
