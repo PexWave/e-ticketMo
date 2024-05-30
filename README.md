@@ -1,5 +1,5 @@
-
 # Zamboanga City Hall Ticketing System
+![ticketing](https://github.com/PexWave/e-ticketMo/assets/139829241/cb236ba6-c789-4763-adbf-e52a78a6b511)
 
 This ticketing system application is built with Laravel, Vue.js, Vuetify, and MySQL. It utilizes Pusher for real-time updates and WebSockets. The app is designed to assist the Computer Division Office at Zamboanga City Hall in managing and resolving issues from various offices within the City Hall.
 
