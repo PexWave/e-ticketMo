@@ -43,7 +43,7 @@ This ticketing system application is built with Laravel, Vue.js, Vuetify, and My
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/pexwave/zamboanga-ticketing-system.git
+    git clone https://github.com/PexWave/e-ticketMo.git
     cd zamboanga-ticketing-system
     ```
 
